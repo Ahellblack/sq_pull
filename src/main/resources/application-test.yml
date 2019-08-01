@@ -1,0 +1,54 @@
+spring:
+  datasource:
+    #driver-class-name: oracle.jdbc.driver.OracleDriver
+    #username: wds
+    #password: narisq
+    #url: jdbc:oracle:thin:@//172.20.50.51:1521/wds
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: root
+    url: jdbc:mysql://10.1.30.207:3306/sqdata?useUnicode=true&characterEncoding=utf8&useSSL=true&allowMultiQueries=true
+#rabbitmq相关配置dell-PC
+  rabbitmq:
+     host: 114.80.231.178 #10.1.30.24
+     port: 5671
+     username: shuiwen
+     password: siti@sw
+     publisher-confirms: true
+     publisher-returns: true
+     virtual-host: shuiwen
+     listener:
+        simple:
+          acknowledge-mode: manual #采用手动应答
+          concurrency: 3
+          max-concurrency: 3
+          retry:
+            enabled: false #是否支持重试
+          prefetch: 10
+#rabbitmq相关配置
+  #rabbitmq:
+    #host: 10.1.4.108 #127.0.0.1 #10.1.30.24
+    #port: 5672
+    #username: wh
+    #password: wh@siti
+    #virtual-host: /
+     #publisher-confirms: true
+     #publisher-returns: true     #启用发送重试 队列满了发不进去时启动重试
+     #spring.rabbitmq.template.retry.enabled=true
+     #1秒钟后重试一次
+     #spring.rabbitmq.template.retry.initial-interval=1000
+     #最大重试次数 3次
+     #spring.rabbitmq.template.retry.max-attempts=3
+     #最大间隔 10秒钟
+     #spring.rabbitmq.template.retry.max-interval=10000
+     #等待间隔 的倍数。如果为2  第一次 乘以2 等1秒， 第二次 乘以2 等2秒 ，第三次 乘以2 等4秒
+     #spring.rabbitmq.template.retry.multiplier=1.0
+filePath:
+  invalidFileDelete: 0    # 无效文件立即删除
+  bikeClean: C:/wisdomhydrologic/bikeClean/    # 文件服务器地址
+  head: C:/wisdomhydrologic/head/    # 用户头像
+  feedback: C:/wisdomhydrologic/feedback/    # 用户反馈
+
+logback:
+  logHome: C:/wisdomhydrologic/log/
+  logName: wisdomhydrologic

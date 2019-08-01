@@ -1,0 +1,20 @@
+quartz:
+  enabled: true
+spring:
+  thymeleaf:
+    mode: LEGACYHTML5
+  profiles:
+     active: dev
+
+  application:
+    name: wisdomhydrologic
+mybatis:
+  configuration:
+    mapUnderscoreToCamelCase: true
+version:
+  calversion: "V1.1" # 版本号
+  build: 1111 # 小版本号
+
+server:
+  port: 8098
+  context-path: /wisdomhydrologic
