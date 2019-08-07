@@ -23,7 +23,7 @@ public interface FetchData {
 
     List<DayVo> selectByDayCondition(String date, int all, int begin, int end);
 
-    List<DayVo> selectByHourCondition(String date, int all, int begin, int end);
+    List<DayVo> selectByHourCondition(Integer nid,String date);
 
     List<TSDBVo> selectByTSDBCondition(String date, int all, int begin, int end, Integer senid);
 

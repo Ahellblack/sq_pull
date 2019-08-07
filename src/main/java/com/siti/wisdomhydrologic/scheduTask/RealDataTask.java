@@ -54,7 +54,6 @@ public class RealDataTask {
      * */
     public static String getCloseDate(String dateFormat, Date date, long min) throws Exception{
         long dateTime = date.getTime();
-        System.out.println(dateTime);
         long needTime =0;
         if(min>=8*60){
             return new SimpleDateFormat(dateFormat).format(getMinDate(date));

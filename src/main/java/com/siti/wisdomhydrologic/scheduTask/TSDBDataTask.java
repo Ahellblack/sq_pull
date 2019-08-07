@@ -8,6 +8,7 @@ import com.siti.wisdomhydrologic.util.NidListUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -16,6 +17,7 @@ import java.util.List;
 /**
  * Created by dell on 2019/8/1.
  */
+@Component
 public class TSDBDataTask {
 
     private Logger logger = LoggerFactory.getLogger(RealDataTask.class);
@@ -31,7 +33,6 @@ public class TSDBDataTask {
         List<Integer> nidList = NidListUtils.getNidList();
         List<TSDBVo> TSDBVoList = tsdbMapper.selectRealTSDB(nidList,date);
         producerImpl.sendRealTSDBMsg(TSDBVoList);
-        logger.info("在{}获得的TSDB数据", date);
     }
 
 

@@ -30,8 +30,8 @@ public class TSDBController {
 
     public static final Logger logger = LoggerFactory.getLogger(DataPullController.class);
     public static final int MAX_SIZE = 10000;
-    public static final String Start_Time = "2015";
-    public static final String End_Time = "2016";
+    public static final String Start_Time = "2014";
+    public static final String End_Time = "2017";
     @Resource
     FetchDataImpl fetchDataImpl;
     @Resource
@@ -63,9 +63,9 @@ public class TSDBController {
                     Sum = Sum + list.size();
                     map = pullBiz.getTSDBMap(list);
                     for (int k : map.keySet()) {
-                        logger.info("nid为{}处于{}年的数据,合计打包{}条数据", nid, date, Sum);
                         producerImpl.sendTSDBMsg(map.get(k));
                     }
+                    logger.info("nid为{}处于{}年的数据,合计打包{}条数据", nid, date, Sum);
                 }
             }
         }
@@ -76,8 +76,10 @@ public class TSDBController {
         Date today = new Date();
         String date = DateOrTimeTrans.Date2TimeString(today);
         List<Integer> nidList = NidListUtils.getNidList();
+        System.out.println(nidList);
         List<TSDBVo> tsdbVoList = tsdbMapper.selectRealTSDB(nidList,date);
-        producerImpl.sendTSDBMsg(tsdbVoList);
-        logger.info("在{}获得的TSDB数据{}", date,tsdbVoList);
+        producerImpl.sendRealTSDBMsg(tsdbVoList);
+        logger.info("在{}获得的TSDB数据数{}", date,tsdbVoList.size());
     }
+
 }

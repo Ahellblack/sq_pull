@@ -44,9 +44,9 @@ public class FetchDataImpl implements FetchData{
         return dayMapper.selectByConditions( date,nid, begin, end);
     }
     @Override
-    public List<DayVo> selectByHourCondition(String date,int all,int begin,int end) {
+    public List<DayVo> selectByHourCondition(Integer nid,String date) {
 
-        return hourMapper.selectByConditions( date,all, begin, end);
+        return hourMapper.selectMonthByNid(nid,date);
     }
     @Override
     public List<TSDBVo> selectByTSDBCondition(String date, int all, int begin, int end, Integer senid) {

@@ -6,6 +6,7 @@ import com.siti.wisdomhydrologic.datepull.service.impl.FetchDataImpl;
 import com.siti.wisdomhydrologic.datepull.vo.DayVo;
 import com.siti.wisdomhydrologic.rabbitmq.service.impl.ProducerImpl;
 import com.siti.wisdomhydrologic.util.DatesUtils;
+import com.siti.wisdomhydrologic.util.NidListUtils;
 import com.siti.wisdomhydrologic.util.PullBiz;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,10 +28,10 @@ import java.util.Map;
 @RestController
 @RequestMapping("/hourdata")
 public class HourDataController {
-
     public static final Logger logger = LoggerFactory.getLogger(DataPullController.class);
     public static final int MAX_SIZE = 10000;
-    public static final String Earliest_Time = "2002-06-06";
+    public static final String Start_Time = "2019-01";
+    public static final String End_Time = "2019-12";
     @Resource
     FetchDataImpl fetchDataImpl;
     @Resource
@@ -43,30 +43,58 @@ public class HourDataController {
     @Resource
     private NodeService nodeService;
 
-
     @GetMapping("/getdata")
     public void startPull() throws ParseException {
         //获取最新日期
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM");
         DatesUtils datesUtils = new DatesUtils();
         //得到一个从数据存在的最早日期到当前日期的list
-        List<String> datesList = datesUtils.findDates(Earliest_Time, simpleDateFormat.format(new Date()));
+        List<String> datesList = datesUtils.findMonthDates(Start_Time, End_Time);
+        System.out.println(datesList);
+        List<Integer> nidList = NidListUtils.getNidList();
         Map<Integer, List<DayVo>> map = new HashMap<>();
-        int index = 0;
-        for (String date :datesList){
-            List<DayVo> list = fetchDataImpl.selectByHourCondition(date, MAX_SIZE, index * MAX_SIZE, (index + 1) * MAX_SIZE);
-            if(list.size()<0){
-                System.out.println("数据异常");
-                break;
-            }else{
-                System.out.println(list);
-                map = pullBiz.getMap(list);
-                for (int k : map.keySet()) {
-                    producerImpl.sendHourMsg(map.get(k));
+        int sum = 0;
+        for (Integer nid : nidList) {
+            for (String date : datesList) {
+                List<DayVo> list = fetchDataImpl.selectByHourCondition(nid, date);
+                if (list.size() > 0) {
+                    map = pullBiz.getMap(list);
+                    for (int k : map.keySet()) {
+                        sum = sum + map.get(k).size();
+                        logger.info("NID为{}在第{}年的Hour数据,合计共{}条", nid, date, sum);
+                        producerImpl.sendHourMsg(map.get(k));
+                    }
                 }
             }
         }
     }
+
+    @GetMapping("/getrealdata")
+    public void startRealPull() throws ParseException {
+        //获取最新日期
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM");
+        DatesUtils datesUtils = new DatesUtils();
+        //得到一个从数据存在的最早日期到当前日期的list
+        List<String> datesList = datesUtils.findMonthDates(Start_Time, End_Time);
+        System.out.println(datesList);
+        List<Integer> nidList = NidListUtils.getNidList();
+        Map<Integer, List<DayVo>> map = new HashMap<>();
+        int sum = 0;
+        for (Integer nid : nidList) {
+            for (String date : datesList) {
+                List<DayVo> list = fetchDataImpl.selectByHourCondition(nid, date);
+                if (list.size() > 0) {
+                    map = pullBiz.getMap(list);
+                    for (int k : map.keySet()) {
+                        sum = sum + map.get(k).size();
+                        logger.info("NID为{}在第{}年的Hour数据,合计共{}条", nid, date, sum);
+                        producerImpl.sendRealHourMsg(map.get(k));
+                    }
+                }
+            }
+        }
+    }
+
 
     /*@GetMapping("/getdata")
         public String startPull() {

@@ -11,12 +11,22 @@ import java.util.List;
  */
 public interface HourMapper {
 
-    @Select("select count(*) from HOURDB where TO_CHAR(TIME,'YYYY-MM-dd')=#{date}")
+    @Select("select count(*) from HOURDB where TO_CHAR(TIME,'YYYY-MM')=#{date}")
     int selectHourCount(@Param("date")String date);
 
-    @Select("select * from " +
-            "(select s.*,rownum rowN from HOURDB s where TO_CHAR(TIME,'YYYY-MM-dd')=#{date} and  rownum<#{all} \n" +
-            ") m where m.rowN between #{begin} and #{end}")
-    List<DayVo> selectByConditions(@Param("date")String date, @Param("all")int all, @Param("begin")int begin, @Param("end")int end);
+
+    @Select("<script>select * from HOURDB where TO_CHAR(TIME,'YYYY-MM')=#{date} and" +
+            " SENID in (<foreach collection=\"nidList\" item=\"item\" separator=\",\">#{item}</foreach>) " +
+            "</script> ")
+    List<DayVo> selectByConditions(@Param("nidList") List<Integer> nidList,@Param("date")String date);
+
+    @Select("<script>select * from HOURDB where SENID = #{nid} " +
+            "and TO_CHAR(TIME,'YYYY-MM')=#{date} </script> ")
+    List<DayVo> selectMonthByNid(@Param("nid")Integer nid,@Param("date")String date);
+
+    @Select("<script>select * from HOURDB where SENID = #{nid} " +
+            "and TO_CHAR(TIME,'YYYY-MM-dd')=#{date} </script> ")
+    List<DayVo> selectDayByNid(@Param("nid")Integer nid,@Param("date")String date);
+
 
 }
