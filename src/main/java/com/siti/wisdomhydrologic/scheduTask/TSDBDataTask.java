@@ -26,12 +26,14 @@ public class TSDBDataTask {
     @Resource
     private ProducerImpl producerImpl;
 
-    @Scheduled(cron = "0 0 12 * * ? ")
+    //每个整点04分执行方法
+    @Scheduled(cron = "0 4 0/1 * * ?")//0 0 0/1 * * ?
     public void testSca() throws Exception {
         Date today = new Date();
         String date = DateOrTimeTrans.Date2TimeString(today);
         List<Integer> nidList = NidListUtils.getNidList();
         List<TSDBVo> TSDBVoList = tsdbMapper.selectRealTSDB(nidList,date);
+        logger.info("{}的tsdb数据",date);
         producerImpl.sendRealTSDBMsg(TSDBVoList);
     }
 
