@@ -83,6 +83,46 @@ public class RealVo {
         this.TS = TS;
     }
 
+    public int getMaxBatch() {
+        return maxBatch;
+    }
+
+    public void setMaxBatch(int maxBatch) {
+        this.maxBatch = maxBatch;
+    }
+
+    public int getCurrentBatch() {
+        return currentBatch;
+    }
+
+    public void setCurrentBatch(int currentBatch) {
+        this.currentBatch = currentBatch;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public int getSumSize() {
+        return sumSize;
+    }
+
+    public void setSumSize(int sumSize) {
+        this.sumSize = sumSize;
+    }
+
+    public int getCurrentSize() {
+        return currentSize;
+    }
+
+    public void setCurrentSize(int currentSize) {
+        this.currentSize = currentSize;
+    }
+
     @Override
     public String toString() {
         return "Real{" + "senId=" + senId + ", Time=" + DateOrTimeTrans.Date2TimeString2(Time) + ", FACTV=" + FACTV + ", IFCH=" + IFCH + ", CYCLE=" + CYCLE + ", STATE=" + STATE + ", TS=" + TS + '}';

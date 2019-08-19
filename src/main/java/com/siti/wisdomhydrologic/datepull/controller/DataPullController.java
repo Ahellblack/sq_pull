@@ -32,8 +32,8 @@ import java.util.Map;
 public class DataPullController {
     public static final Logger logger = LoggerFactory.getLogger(DataPullController.class);
     public static final int MAX_SIZE = 10000;
-    public static final String Start_Time = "2006";
-    public static final String End_Time = "2011";
+    public static final String Start_Time = "2019";
+    public static final String End_Time = "2019";
 
     @Resource
     FetchDataImpl fetchDataImpl;
@@ -64,7 +64,7 @@ public class DataPullController {
                     for (int k : map.keySet()) {
                         sum = sum + map.get(k).size();
                         logger.info("第{}年的day数据,合计共{}条", date, sum);
-                        producerImpl.sendDayMsg(map.get(k));
+                        producerImpl.sendRealDayMsg(map.get(k));
                     }
                 }
             }
@@ -78,7 +78,7 @@ public class DataPullController {
         List<Integer> nidList = NidListUtils.getNidList();
         List<DayVo> dayVoList = dayMapper.selectRealDay(nidList, date);
         System.out.println(dayVoList);
-        producerImpl.sendDayMsg(dayVoList);
+        producerImpl.sendRealDayMsg(dayVoList);
         logger.info("在{}获得的daydb数据", date);
     }
 

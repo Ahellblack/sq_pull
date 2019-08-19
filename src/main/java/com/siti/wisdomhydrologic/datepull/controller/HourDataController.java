@@ -3,7 +3,7 @@ package com.siti.wisdomhydrologic.datepull.controller;
 import com.siti.wisdomhydrologic.datepull.service.ElementService;
 import com.siti.wisdomhydrologic.datepull.service.NodeService;
 import com.siti.wisdomhydrologic.datepull.service.impl.FetchDataImpl;
-import com.siti.wisdomhydrologic.datepull.vo.DayVo;
+import com.siti.wisdomhydrologic.datepull.vo.HourVo;
 import com.siti.wisdomhydrologic.rabbitmq.service.impl.ProducerImpl;
 import com.siti.wisdomhydrologic.util.DatesUtils;
 import com.siti.wisdomhydrologic.util.NidListUtils;
@@ -52,17 +52,17 @@ public class HourDataController {
         List<String> datesList = datesUtils.findMonthDates(Start_Time, End_Time);
         System.out.println(datesList);
         List<Integer> nidList = NidListUtils.getNidList();
-        Map<Integer, List<DayVo>> map = new HashMap<>();
+        Map<Integer, List<HourVo>> map = new HashMap<>();
         int sum = 0;
         for (Integer nid : nidList) {
             for (String date : datesList) {
-                List<DayVo> list = fetchDataImpl.selectByHourCondition(nid, date);
+                List<HourVo> list = fetchDataImpl.selectByHourCondition(nid, date);
                 if (list.size() > 0) {
-                    map = pullBiz.getMap(list);
+                    map = pullBiz.getHourMap(list);
                     for (int k : map.keySet()) {
                         sum = sum + map.get(k).size();
                         logger.info("NID为{}在第{}年的Hour数据,合计共{}条", nid, date, sum);
-                        producerImpl.sendHourMsg(map.get(k));
+                        producerImpl.sendRealHourMsg(map.get(k));
                     }
                 }
             }
@@ -78,13 +78,13 @@ public class HourDataController {
         List<String> datesList = datesUtils.findMonthDates(Start_Time, End_Time);
         System.out.println(datesList);
         List<Integer> nidList = NidListUtils.getNidList();
-        Map<Integer, List<DayVo>> map = new HashMap<>();
+        Map<Integer, List<HourVo>> map = new HashMap<>();
         int sum = 0;
         for (Integer nid : nidList) {
             for (String date : datesList) {
-                List<DayVo> list = fetchDataImpl.selectByHourCondition(nid, date);
+                List<HourVo> list = fetchDataImpl.selectByHourCondition(nid, date);
                 if (list.size() > 0) {
-                    map = pullBiz.getMap(list);
+                    map = pullBiz.getHourMap(list);
                     for (int k : map.keySet()) {
                         sum = sum + map.get(k).size();
                         logger.info("NID为{}在第{}年的Hour数据,合计共{}条", nid, date, sum);
@@ -107,9 +107,9 @@ public class HourDataController {
             return "数据异常";
         }
         int count = pullBiz.getCount(size);
-        Map<Integer, List<DayVo>> map = new HashMap<>();
+        Map<Integer, List<HourVo>> map = new HashMap<>();
         int index = 0;
-        List<DayVo> list = fetchDataImpl.selectByHourCondition(local.toString(), size, index * MAX_SIZE, (index + 1) * MAX_SIZE);
+        List<HourVo> list = fetchDataImpl.selectByHourCondition(local.toString(), size, index * MAX_SIZE, (index + 1) * MAX_SIZE);
         List<Element> elementList = elementService.getElement();
         List<Crunode> nodeList = nodeService.getCrunode();
         //定义list数据量

@@ -15,6 +15,6 @@ public interface RealMapper {
     List<Real> getLatest30MinData(@Param("date") int todayStr);
 */
 
-    @Select("select * from REAL where to_char(TIME,'YYYY-MM-dd HH24:mi:ss') = #{date}")
-    List<RealVo> getLatest5MinData(@Param("date") String date);
+    @Select("select * from REAL where to_char(TIME,'YYYY-MM-dd HH24:mi:ss')in( #{date},#{date1},#{date2})")
+    List<RealVo> getLatest5MinData(@Param("date") String date,@Param("date1") String date1,@Param("date2") String date2);
 }

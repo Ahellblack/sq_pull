@@ -7,6 +7,7 @@ import com.siti.wisdomhydrologic.rabbitmq.service.impl.ProducerImpl;
 import com.siti.wisdomhydrologic.scheduTask.mapper.RealMapper;
 import com.siti.wisdomhydrologic.util.DateOrTimeTrans;
 import com.siti.wisdomhydrologic.util.NidListUtils;
+import com.siti.wisdomhydrologic.util.PullBiz;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by dell on 2019/7/29.
@@ -32,6 +34,8 @@ public class DayDataTask {
     @Resource
     FetchDataImpl fetchDataImpl;
     @Resource
+    PullBiz pullBiz = new PullBiz();
+    @Resource
     ProducerImpl producerImpl;
 
     /**
@@ -43,7 +47,10 @@ public class DayDataTask {
         String date = DateOrTimeTrans.Date2TimeString(today);
         List<Integer> nidList = NidListUtils.getNidList();
         List<DayVo> dayVoList = dayMapper.selectRealDay(nidList,date);
-        producerImpl.sendRealDayMsg(dayVoList);
-        logger.info("在{}获得的day数据", date);
+        Map<Integer, List<DayVo>> map = pullBiz.getMap(dayVoList);
+        for (int k : map.keySet()) {
+            producerImpl.sendRealDayMsg(map.get(k));
+            logger.info("在{}获得的day数据", date);
+        }
     }
 }

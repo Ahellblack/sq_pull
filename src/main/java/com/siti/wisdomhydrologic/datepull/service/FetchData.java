@@ -2,6 +2,7 @@ package com.siti.wisdomhydrologic.datepull.service;
 
 import com.siti.wisdomhydrologic.datepull.entity.RTSQ;
 import com.siti.wisdomhydrologic.datepull.vo.DayVo;
+import com.siti.wisdomhydrologic.datepull.vo.HourVo;
 import com.siti.wisdomhydrologic.datepull.vo.TSDBVo;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public interface FetchData {
 
     List<DayVo> selectByDayCondition(String date, int all, int begin, int end);
 
-    List<DayVo> selectByHourCondition(Integer nid,String date);
+    List<HourVo> selectByHourCondition(Integer nid, String date);
 
     List<TSDBVo> selectByTSDBCondition(String date, int all, int begin, int end, Integer senid);
 

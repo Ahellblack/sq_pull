@@ -4,16 +4,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Created by DC on 2019/7/6.
- *
- * @data ${DATA}-15:57
+ * Created by dell on 2019/7/10.
  */
-public class DayVo implements Serializable {
-
-    public DayVo() {
-
-    }
-
+public class HourVo implements Serializable {
     private int senId;
     private Date time;
     private double v;
@@ -224,8 +217,4 @@ public class DayVo implements Serializable {
         this.sensorDataUnit = sensorDataUnit;
     }
 
-    @Override
-    public String toString() {
-        return "DayVo{" + "senId=" + senId + ", time=" + time + ", v='" + v + '\'' + ", avgV='" + avgV + '\'' + ", maxV='" + maxV + '\'' + ", maxT='" + maxT + '\'' + ", minV='" + minV + '\'' + ", minT='" + minT + '\'' + ", s='" + s + '\'' + ", avgS='" + avgS + '\'' + ", maxS='" + maxS + '\'' + ", minS='" + minS + '\'' + ", maxBatch=" + maxBatch + ", currentBatch=" + currentBatch + ", status=" + status + ", sumSize=" + sumSize + ", currentSize=" + currentSize + '}';
-    }
 }

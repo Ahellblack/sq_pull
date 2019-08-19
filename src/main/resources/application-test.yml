@@ -1,13 +1,9 @@
 spring:
   datasource:
-    #driver-class-name: oracle.jdbc.driver.OracleDriver
-    #username: wds
-    #password: narisq
-    #url: jdbc:oracle:thin:@//172.20.50.51:1521/wds
-    driver-class-name: com.mysql.jdbc.Driver
-    username: root
-    password: root
-    url: jdbc:mysql://10.1.30.207:3306/sqdata?useUnicode=true&characterEncoding=utf8&useSSL=true&allowMultiQueries=true
+      driver-class-name: oracle.jdbc.driver.OracleDriver
+      username: wds
+      password: narisq
+      url: jdbc:oracle:thin:@//172.20.50.51:1521/wds
 #rabbitmq相关配置dell-PC
   rabbitmq:
      host: 114.80.231.178 #10.1.30.24

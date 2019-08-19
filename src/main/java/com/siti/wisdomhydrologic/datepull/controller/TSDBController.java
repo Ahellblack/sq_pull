@@ -30,8 +30,8 @@ public class TSDBController {
 
     public static final Logger logger = LoggerFactory.getLogger(DataPullController.class);
     public static final int MAX_SIZE = 10000;
-    public static final String Start_Time = "2014";
-    public static final String End_Time = "2017";
+    public static final String Start_Time = "2019";
+    public static final String End_Time = "2019";
     @Resource
     FetchDataImpl fetchDataImpl;
     @Resource
@@ -63,7 +63,7 @@ public class TSDBController {
                     Sum = Sum + list.size();
                     map = pullBiz.getTSDBMap(list);
                     for (int k : map.keySet()) {
-                        producerImpl.sendTSDBMsg(map.get(k));
+                        producerImpl.sendRealTSDBMsg(map.get(k));
                     }
                     logger.info("nid为{}处于{}年的数据,合计打包{}条数据", nid, date, Sum);
                 }

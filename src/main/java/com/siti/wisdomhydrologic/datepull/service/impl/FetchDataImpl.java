@@ -7,6 +7,7 @@ import com.siti.wisdomhydrologic.datepull.mapper.RTSQMapper;
 import com.siti.wisdomhydrologic.datepull.mapper.TSDBMapper;
 import com.siti.wisdomhydrologic.datepull.service.FetchData;
 import com.siti.wisdomhydrologic.datepull.vo.DayVo;
+import com.siti.wisdomhydrologic.datepull.vo.HourVo;
 import com.siti.wisdomhydrologic.datepull.vo.TSDBVo;
 import org.springframework.stereotype.Service;
 
@@ -44,7 +45,7 @@ public class FetchDataImpl implements FetchData{
         return dayMapper.selectByConditions( date,nid, begin, end);
     }
     @Override
-    public List<DayVo> selectByHourCondition(Integer nid,String date) {
+    public List<HourVo> selectByHourCondition(Integer nid, String date) {
 
         return hourMapper.selectMonthByNid(nid,date);
     }
