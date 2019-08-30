@@ -24,9 +24,10 @@ public interface HourMapper {
             "and TO_CHAR(TIME,'YYYY-MM')=#{date} </script> ")
     List<HourVo> selectMonthByNid(@Param("nid")Integer nid, @Param("date")String date);
 
-    @Select("<script>select * from HOURDB where SENID = #{nid} " +
-            "and TO_CHAR(TIME,'YYYY-MM-dd')=#{date} </script> ")
-    List<HourVo> selectDayByNid(@Param("nid")Integer nid,@Param("date")String date);
-
+    @Select("<script>"+
+            "select * from HOURDB where SENID in (" +
+            "<foreach collection=\"nidList\" item=\"item\" separator=\",\">#{item}</foreach>) " +
+            "and time = TO_DATE(#{date} ,'YYYY-MM-dd HH24:mi:ss')</script> ")
+    List<HourVo> selectDayByNid(@Param("nidList")List<Integer>nid,@Param("date")String date);
 
 }

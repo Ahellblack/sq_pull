@@ -25,6 +25,6 @@ public interface DayMapper extends Mapper<DayVo> {
 
     @Select("<script>select * from DAYDB where SENID in (" +
             "<foreach collection=\"nidList\" item=\"item\" separator=\",\">" +
-            "#{item}</foreach>) and To_CHAR(TIME,'YYYY-MM-dd') = #{date}</script>")
+            "#{item}</foreach>) and TIME = TO_Date(#{date},'YYYY-MM-dd') </script>")
     List<DayVo> selectRealDay(@Param("nidList") List<Integer> nidList,@Param("date") String date);
 }

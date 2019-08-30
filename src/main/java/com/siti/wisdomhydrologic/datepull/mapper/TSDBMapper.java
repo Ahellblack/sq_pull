@@ -25,6 +25,6 @@ public interface TSDBMapper {
 
     @Select("<script>select * from TSDB where SENID in (" +
             "<foreach collection=\"nidList\" item=\"item\" separator=\",\">" +
-            "#{item}</foreach>) and To_CHAR(TIME,'YYYY-MM-dd') = #{date}</script>")
+            "#{item}</foreach>) and TIME = TO_DATE(#{date},'YYYY-MM-dd HH24:mi:ss')</script>")
     List<TSDBVo> selectRealTSDB(@Param("nidList") List<Integer> nidList, @Param("date") String date);
 }

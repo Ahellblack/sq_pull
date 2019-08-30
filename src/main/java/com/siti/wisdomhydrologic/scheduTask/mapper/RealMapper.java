@@ -15,6 +15,7 @@ public interface RealMapper {
     List<Real> getLatest30MinData(@Param("date") int todayStr);
 */
 
-    @Select("select * from REAL where to_char(TIME,'YYYY-MM-dd HH24:mi:ss')in( #{date},#{date1},#{date2})")
-    List<RealVo> getLatest5MinData(@Param("date") String date,@Param("date1") String date1,@Param("date2") String date2);
+    @Select("<script>select * from rtsq t where TIME = TO_DATE(#{dateStart},'YYYY-MM-DD HH24:MI:SS') " +
+            " and senid in(<foreach collection=\"nidList\" item=\"item\" separator=\",\">#{item}</foreach>)</script>")
+    List<RealVo> getLatest5MinData(@Param("dateStart") String date,@Param("nidList") List<Integer> nidList);
 }

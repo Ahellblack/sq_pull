@@ -3,6 +3,8 @@ package com.siti.wisdomhydrologic.scheduTask;
 import com.siti.wisdomhydrologic.datepull.vo.RealVo;
 import com.siti.wisdomhydrologic.rabbitmq.service.impl.ProducerImpl;
 import com.siti.wisdomhydrologic.scheduTask.mapper.RealMapper;
+import com.siti.wisdomhydrologic.util.DateTransform;
+import com.siti.wisdomhydrologic.util.NidListUtils;
 import com.siti.wisdomhydrologic.util.PullBiz;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -31,18 +34,24 @@ public class RealDataTask {
     @Resource
     PullBiz pullBiz;
 
-    @Scheduled(cron = "0 0/5 * * * ?")//0 2/5 * * * ?
+    @Scheduled(cron = "0 1/5 * * * ? ")//0 2/5 * * * ?
     public void testSca() throws Exception {
         Date today = new Date();
-        String date = getCloseDate("YYYY-MM-dd HH:mm:ss", today, 5);
-        String date1 = getCloseDate("YYYY-MM-dd HH:mm:ss", today, 10);
-        String date2 = getCloseDate("YYYY-MM-dd HH:mm:ss", today, 15);
-        System.out.println(date+">>>"+date1+">>>"+date2);
-        List<RealVo> list = realMapper.getLatest5MinData(date,date1,date2);
+        //获取前一个整5分数据
+        String dateStart = getCloseDate("yyyy-MM-dd HH:mm:ss", today, 5);
+        /*System.out.println("#########"+dateStart);*/
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(DateTransform.String2Date(dateStart,"yyyy-MM-dd HH:mm:ss"));
+        //往前推10分钟
+        cal.add(Calendar.MINUTE,-5);
+        String dateEnd = DateTransform.Date2String(cal.getTime(),"yyyy-MM-dd HH:mm:ss");
+        List<Integer> nidList = NidListUtils.getNidList();
+        //获取276个传感器在这个时间前5分钟的数据
+        List<RealVo> list = realMapper.getLatest5MinData(dateEnd,nidList);
         Map<Integer, List<RealVo>> map = pullBiz.getRealMap(list);
         map.forEach((key, rlist) -> {
             producerImpl.sendRealMsg(list);
-            logger.info("第{}个list,在{},{},{}时间,获取5分钟内的real数据共{}条", key,date,date1,date2,list.size());
+            logger.info("第{}个list,在{}时间,获取5分钟内的real数据共{}条", key,dateEnd,list.size());
         });
     }
 
