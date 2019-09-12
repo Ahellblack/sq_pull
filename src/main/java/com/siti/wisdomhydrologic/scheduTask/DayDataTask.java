@@ -41,7 +41,7 @@ public class DayDataTask {
     /**
      * 每天中午12点触发
      * */
-    @Scheduled(cron = "0 0 12 * * ?")
+    @Scheduled(cron = "0 0/1 * * * ?")
     public void testSca() throws Exception {
         Date today = new Date();
         String date = DateOrTimeTrans.Date2TimeString(today);

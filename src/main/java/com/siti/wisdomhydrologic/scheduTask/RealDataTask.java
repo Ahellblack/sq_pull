@@ -34,7 +34,7 @@ public class RealDataTask {
     @Resource
     PullBiz pullBiz;
 
-    @Scheduled(cron = "0 1/5 * * * ? ")//0 2/5 * * * ?
+    @Scheduled(cron = "0 0/1 * * * ?")//0 2/5 * * * ?
     public void testSca() throws Exception {
         Date today = new Date();
         //获取前一个整5分数据
@@ -42,7 +42,7 @@ public class RealDataTask {
         /*System.out.println("#########"+dateStart);*/
         Calendar cal = Calendar.getInstance();
         cal.setTime(DateTransform.String2Date(dateStart,"yyyy-MM-dd HH:mm:ss"));
-        //往前推10分钟
+        //往前推5分钟
         cal.add(Calendar.MINUTE,-5);
         String dateEnd = DateTransform.Date2String(cal.getTime(),"yyyy-MM-dd HH:mm:ss");
         List<Integer> nidList = NidListUtils.getNidList();
