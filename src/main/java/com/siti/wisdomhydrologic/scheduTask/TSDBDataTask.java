@@ -32,7 +32,7 @@ public class TSDBDataTask {
     PullBiz pullBiz;
 
     //每个整点04分执行方法
-    @Scheduled(cron = "0 0/1 * * * ?")//0/5 * * * * ?   0 4 0/1 * * ?
+    @Scheduled(cron = "0 4 0/1 * * ?")//0/5 * * * * ?   0 4 0/1 * * ?
     public void testSca() throws Exception {
         Date today = new Date();
 
@@ -48,7 +48,7 @@ public class TSDBDataTask {
         List<TSDBVo> TSDBVoList = tsdbMapper.selectRealTSDB(nidList,date);
         Map<Integer, List<TSDBVo>> map = pullBiz.getTSDBMap(TSDBVoList);
         for (int k : map.keySet()) {
-            logger.info("{}的tsdb数据{}条", date,TSDBVoList.size());
+            logger.info("在{}获得的tsdb数据{}条", date,TSDBVoList.size());
             producerImpl.sendRealTSDBMsg(map.get(k));
         }
     }

@@ -55,7 +55,6 @@ public class PullBiz {
                     day.setCurrentSize(size % LIST_SIZE);
                     day.setStatus(1);
                     l.add(day);
-                    System.out.println("最后一个包的第一个数据" + day);
                     return map;
                 }
                 //map中每一个list的第一个字段设置属性
@@ -66,7 +65,6 @@ public class PullBiz {
                     day.setMaxBatch(batch);
                     day.setStatus(0);
                     l.add(day);
-                    System.out.print("每个包的第一个数据"+day);
                 }else if (map.size() == batch && l.size() == 0) {
                     return map;
                 }else {
@@ -91,7 +89,6 @@ public class PullBiz {
                     day.setCurrentSize(size);
                     day.setStatus(1);
                     l.add(day);
-                    System.out.println("最后一个包的第一个数据" + day);
                 } else if (l.size() == 0 && map.size() != batch) {
                     day.setCurrentBatch(mapSize);
                     day.setSumSize(size);
@@ -99,7 +96,6 @@ public class PullBiz {
                     day.setMaxBatch(batch);
                     day.setStatus(0);
                     l.add(day);
-                    System.out.println("每个包的第一个数据" + day);
                 } else if (map.size() == batch && l.size() == size % LIST_SIZE) {
                     return map;
                 } else {
@@ -132,7 +128,6 @@ public class PullBiz {
                     day.setCurrentSize(size % LIST_SIZE);
                     day.setStatus(1);
                     l.add(day);
-                    System.out.println("最后一个包的第一个数据" + day);
                     return map;
                 }
                 //map中每一个list的第一个字段设置属性
@@ -143,7 +138,6 @@ public class PullBiz {
                     day.setMaxBatch(batch);
                     day.setStatus(0);
                     l.add(day);
-                    System.out.print("每个包的第一个数据"+day);
                 }else if (map.size() == batch && l.size() == 0) {
                     return map;
                 }else {
@@ -168,7 +162,6 @@ public class PullBiz {
                     day.setCurrentSize(size);
                     day.setStatus(1);
                     l.add(day);
-                    System.out.println("最后一个包的第一个数据" + day);
                 } else if (l.size() == 0 && map.size() != batch) {
                     day.setCurrentBatch(mapSize);
                     day.setSumSize(size);
@@ -176,7 +169,6 @@ public class PullBiz {
                     day.setMaxBatch(batch);
                     day.setStatus(0);
                     l.add(day);
-                    System.out.println("每个包的第一个数据" + day);
                 } else if (map.size() == batch && l.size() == size % LIST_SIZE) {
                     return map;
                 } else {
@@ -217,7 +209,6 @@ public class PullBiz {
                     day.setCurrentSize(size % LIST_SIZE);
                     day.setStatus(1);
                     l.add(day);
-                    System.out.println("*********" + day);
                     return map;
                 } else {
                     l.add(day);
@@ -241,7 +232,6 @@ public class PullBiz {
                     day.setCurrentSize(size);
                     day.setStatus(1);
                     l.add(day);
-                    System.out.println("最后一个包的第一个数据" + day);
                 } else if (l.size() == 0 && map.size() != batch) {
                     day.setCurrentBatch(mapSize);
                     day.setSumSize(size);
@@ -249,7 +239,6 @@ public class PullBiz {
                     day.setMaxBatch(batch);
                     day.setStatus(0);
                     l.add(day);
-                    System.out.println("每个包的第一个数据" + day);
                 } else if (map.size() == batch && l.size() == size % LIST_SIZE) {
                     return map;
                 } else {

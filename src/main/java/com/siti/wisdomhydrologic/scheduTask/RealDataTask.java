@@ -34,7 +34,7 @@ public class RealDataTask {
     @Resource
     PullBiz pullBiz;
 
-    @Scheduled(cron = "0 0/1 * * * ?")//0 2/5 * * * ?
+    @Scheduled(cron = "0 2/5 * * * ?")//0 2/5 * * * ?
     public void testSca() throws Exception {
         Date today = new Date();
         //获取前一个整5分数据
@@ -51,7 +51,7 @@ public class RealDataTask {
         Map<Integer, List<RealVo>> map = pullBiz.getRealMap(list);
         map.forEach((key, rlist) -> {
             producerImpl.sendRealMsg(list);
-            logger.info("第{}个list,在{}时间,获取5分钟内的real数据共{}条", key,dateEnd,list.size());
+            logger.info("在{}时间,获取5分钟内的real数据共{}条",dateEnd,list.size());
         });
     }
 

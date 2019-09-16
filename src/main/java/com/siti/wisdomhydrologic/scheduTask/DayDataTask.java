@@ -41,7 +41,7 @@ public class DayDataTask {
     /**
      * 每天中午12点触发
      * */
-    @Scheduled(cron = "0 0/1 * * * ?")
+    @Scheduled(cron = "0 0 12 1/1 * ? ")
     public void testSca() throws Exception {
         Date today = new Date();
         String date = DateOrTimeTrans.Date2TimeString(today);
@@ -50,7 +50,7 @@ public class DayDataTask {
         Map<Integer, List<DayVo>> map = pullBiz.getMap(dayVoList);
         for (int k : map.keySet()) {
             producerImpl.sendRealDayMsg(map.get(k));
-            logger.info("在{}获得的day数据", date);
+            logger.info("在{}获得的day数据{}条", date,dayVoList.size());
         }
     }
 }
