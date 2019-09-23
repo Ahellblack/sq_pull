@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface FetchData {
 
-    int selectDayCount(String date);
+  /*  int selectDayCount(String date);
 
     int selectHourCount(String s);
 
@@ -30,6 +30,6 @@ public interface FetchData {
 
     List<RTSQ> selectByRTSQCondition(String s, int size, int i, int i1);
 
-    List<Integer> selectTSDBSenId();
+    List<Integer> selectTSDBSenId();*/
 }
 

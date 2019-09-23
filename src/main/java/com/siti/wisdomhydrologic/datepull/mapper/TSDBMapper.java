@@ -15,10 +15,11 @@ public interface TSDBMapper {
     int selectTSDBNum(@Param("date") String date);
 
     @Select("<script>select * from " +
-            "(select s.*,rownum rowN from TSDB s where SENID = #{senid} and " +
-            " TO_CHAR(TIME,'yyyy-MM-dd')=#{date}) m " +
+            "(select s.*,rownum rowN from TSDB s " +
+            "where SENID in (<foreach collection=\"nidList\" item=\"item\" separator=\",\"> #{item}</foreach>)  " +
+            " and TO_CHAR(TIME,'yyyy-MM-dd')=#{date}) m " +
             "where m.rowN between #{begin} and #{end}</script>")
-    List<TSDBVo> selectByConditions(@Param("date") String date, @Param("all") int all, @Param("begin") int begin, @Param("end") int end, @Param("senid") Integer senid);
+    List<TSDBVo> selectByConditions(@Param("date") String date, @Param("all") int all, @Param("begin") int begin, @Param("end") int end, @Param("nidList")List<Integer> nidList);
 
     @Select("SELECT SENID FROM TSDB GROUP BY SENID")
     List<Integer> selectTSDBSenId();

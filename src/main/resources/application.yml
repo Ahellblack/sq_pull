@@ -4,7 +4,7 @@ spring:
   thymeleaf:
     mode: LEGACYHTML5
   profiles:
-     active: siti
+     active: test
 
   application:
     name: wisdomhydrologic

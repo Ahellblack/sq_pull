@@ -46,7 +46,7 @@ public class DataPullController {
 
 
     @GetMapping("/getdata")
-    public void startPull(String startTime,String endTime) throws ParseException {
+    public void startPull(String startTime, String endTime) throws ParseException {
         //获取最新日期
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY");
         DatesUtils datesUtils = new DatesUtils();
@@ -56,16 +56,14 @@ public class DataPullController {
         Map<Integer, List<DayVo>> map = new HashMap<>();
         int index = 0;
         int sum = 0;
-        for (Integer nid : nidList) {
-            for (String date : datesList) {
-                List<DayVo> list = fetchDataImpl.selectByDayCondition(date, nid, index * MAX_SIZE, (index + 1) * MAX_SIZE);
-                if (list.size() > 0) {
-                    map = pullBiz.getMap(list);
-                    for (int k : map.keySet()) {
-                        sum = sum + map.get(k).size();
-                        logger.info("第{}年的day数据,合计共{}条", date, sum);
-                        //producerImpl.sendRealDayMsg(map.get(k));
-                    }
+        for (String date : datesList) {
+            List<DayVo> list = fetchDataImpl.selectByDayCondition(date, nidList, index * MAX_SIZE, (index + 1) * MAX_SIZE);
+            if (list.size() > 0) {
+                map = pullBiz.getMap(list);
+                for (int k : map.keySet()) {
+                    sum = sum + map.get(k).size();
+                    logger.info("第{}天的day数据,合计共{}条", date, sum);
+                    producerImpl.sendRealDayMsg(map.get(k));
                 }
             }
         }

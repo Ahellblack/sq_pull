@@ -51,7 +51,7 @@ public class RealDataTask {
         Map<Integer, List<RealVo>> map = pullBiz.getRealMap(list);
         SimpleDateFormat sdf = new SimpleDateFormat("mmss");
         map.forEach((key, rlist) -> {
-           // producerImpl.sendRealMsg(list);
+           //producerImpl.sendRealMsg(list);
             //整点打印
             String mmss = sdf.format(list.get(0).getTime());
             if ("0000".equals(mmss)) {

@@ -42,7 +42,7 @@ public class TSDBController {
     TSDBMapper tsdbMapper;
 
     @GetMapping("/getdata")
-    public void startPull(String startTime,String endTime) throws ParseException {
+    public void startPull(String startTime, String endTime) throws ParseException {
        /* //获取最新日期
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY");*/
         DatesUtils datesUtils = new DatesUtils();
@@ -57,29 +57,27 @@ public class TSDBController {
         Long start = System.currentTimeMillis();
         //查询索引日期+NID
         for (String date : datesList) {
-            for (Integer nid : nidList) {
-                List<TSDBVo> list = fetchDataImpl.selectByTSDBCondition(date, MAX_SIZE, index * MAX_SIZE, (index + 1) * MAX_SIZE, nid);
-                if (list.size() > 0) {
-                    Sum = Sum + list.size();
-                    map = pullBiz.getTSDBMap(list);
-                    for (int k : map.keySet()) {
-                        //producerImpl.sendRealTSDBMsg(map.get(k));
-                    }
-                    logger.info("nid为{}处于{}年的数据,合计打包{}条数据", nid, date, Sum);
+            List<TSDBVo> list = fetchDataImpl.selectByTSDBCondition(date, MAX_SIZE, index * MAX_SIZE, (index + 1) * MAX_SIZE, nidList);
+            if (list.size() > 0) {
+                Sum = Sum + list.size();
+                map = pullBiz.getTSDBMap(list);
+                for (int k : map.keySet()) {
+                    producerImpl.sendRealTSDBMsg(map.get(k));
                 }
+                logger.info("处于{}年的数据,合计打包{}条数据", date, Sum);
             }
         }
     }
 
     @RequestMapping("/getRealTSDB")
-    public void getTsdbTest(){
+    public void getTsdbTest() {
         Date today = new Date();
         String date = DateOrTimeTrans.Date2TimeString(today);
         List<Integer> nidList = NidListUtils.getNidList();
         System.out.println(nidList);
-        List<TSDBVo> tsdbVoList = tsdbMapper.selectRealTSDB(nidList,date);
+        List<TSDBVo> tsdbVoList = tsdbMapper.selectRealTSDB(nidList, date);
         producerImpl.sendRealTSDBMsg(tsdbVoList);
-        logger.info("在{}获得的TSDB数据数{}", date,tsdbVoList.size());
+        logger.info("在{}获得的TSDB数据数{}", date, tsdbVoList.size());
     }
 
 }

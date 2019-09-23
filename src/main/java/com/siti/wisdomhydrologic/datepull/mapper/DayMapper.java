@@ -15,10 +15,11 @@ import java.util.List;
 
 public interface DayMapper extends Mapper<DayVo> {
 
-    @Select("select * from " +
-            "(select s.*,rownum rowN from DAYDB s where TO_CHAR(TIME,'YYYY-MM-dd')=#{date} and SENID = #{nid} \n" +
-            ") m where m.rowN between #{begin} and #{end}")
-    List<DayVo> selectByConditions(@Param("date") String date, @Param("nid") int nid, @Param("begin") int begin, @Param("end") int end);
+    @Select("<script>select * from " +
+            "(select s.*,rownum rowN from DAYDB s where TO_CHAR(TIME,'YYYY-MM-dd')=#{date} " +
+            "and SENID in (<foreach collection=\"nidList\" item=\"item\" separator=\",\">#{item}</foreach>)" +
+            ") m where m.rowN between #{begin} and #{end}</script>")
+    List<DayVo> selectByConditions(@Param("date") String date, @Param("nidList") List<Integer> nidList, @Param("begin") int begin, @Param("end") int end);
 
     @Select("select count(*) from DAYDB where TO_CHAR(TIME,'YYYY-MM-dd')=#{date}")
     int selectNum(@Param("date") String date);

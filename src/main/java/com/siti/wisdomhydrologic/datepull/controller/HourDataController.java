@@ -39,7 +39,7 @@ public class HourDataController {
 
 
     @GetMapping("/getdata")
-    public void startPull(String startTime,String endTime) throws ParseException {
+    public void startPull(String startTime, String endTime) throws ParseException {
         //获取最新日期
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM");
         DatesUtils datesUtils = new DatesUtils();
@@ -49,19 +49,17 @@ public class HourDataController {
         List<Integer> nidList = NidListUtils.getNidList();
         Map<Integer, List<HourVo>> map = new HashMap<>();
         int sum = 0;
-        for (Integer nid : nidList) {
             for (String date : datesList) {
-                List<HourVo> list = fetchDataImpl.selectByHourCondition(nid, date);
+                List<HourVo> list = fetchDataImpl.selectByHourCondition(nidList, date);
                 if (list.size() > 0) {
                     map = pullBiz.getHourMap(list);
                     for (int k : map.keySet()) {
                         sum = sum + map.get(k).size();
-                        logger.info("NID为{}在第{}年的Hour数据,合计共{}条", nid, date, sum);
-                        //producerImpl.sendRealHourMsg(map.get(k));
+                        logger.info("在第{}年的Hour数据,合计共{}条", date, sum);
+                        producerImpl.sendRealHourMsg(map.get(k));
                     }
                 }
             }
-        }
     }
 
     @GetMapping("/getrealdata")
@@ -75,19 +73,18 @@ public class HourDataController {
         List<Integer> nidList = NidListUtils.getNidList();
         Map<Integer, List<HourVo>> map = new HashMap<>();
         int sum = 0;
-        for (Integer nid : nidList) {
-            for (String date : datesList) {
-                List<HourVo> list = fetchDataImpl.selectByHourCondition(nid, date);
-                if (list.size() > 0) {
-                    map = pullBiz.getHourMap(list);
-                    for (int k : map.keySet()) {
-                        sum = sum + map.get(k).size();
-                        logger.info("NID为{}在第{}年的Hour数据,合计共{}条", nid, date, sum);
-                        producerImpl.sendRealHourMsg(map.get(k));
-                    }
+        for (String date : datesList) {
+            List<HourVo> list = fetchDataImpl.selectByHourCondition(nidList, date);
+            if (list.size() > 0) {
+                map = pullBiz.getHourMap(list);
+                for (int k : map.keySet()) {
+                    sum = sum + map.get(k).size();
+                    logger.info("在{}的Hour数据,合计共{}条", date, sum);
+                    producerImpl.sendRealHourMsg(map.get(k));
                 }
             }
         }
+
     }
 
 

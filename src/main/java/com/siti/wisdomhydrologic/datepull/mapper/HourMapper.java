@@ -20,9 +20,10 @@ public interface HourMapper {
             "</script> ")
     List<HourVo> selectByConditions(@Param("nidList") List<Integer> nidList, @Param("date") String date);
 
-    @Select("<script>select * from HOURDB where SENID = #{nid} " +
+    @Select("<script>select * from HOURDB where " +
+            "SENID in (<foreach collection=\"nidList\" item=\"item\" separator=\",\"> #{item}</foreach>) " +
             "and TO_CHAR(TIME,'YYYY-MM-dd')=#{date} </script> ")
-    List<HourVo> selectMonthByNid(@Param("nid") Integer nid, @Param("date") String date);
+    List<HourVo> selectMonthByNid(@Param("nid") List<Integer> nidList, @Param("date") String date);
 
     @Select("<script>"+
             "select * from HOURDB where SENID in (" +
