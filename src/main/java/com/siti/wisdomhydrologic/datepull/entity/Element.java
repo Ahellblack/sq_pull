@@ -1,7 +1,5 @@
 package com.siti.wisdomhydrologic.datepull.entity;
 
-import java.math.BigDecimal;
-
 /**
  * Created by dell on 2019/7/17.
  */

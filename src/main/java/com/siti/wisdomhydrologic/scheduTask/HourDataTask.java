@@ -13,7 +13,10 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by dell on 2019/8/4.
@@ -36,7 +39,7 @@ public class HourDataTask {
      * HourDB数据拉取
      * 每个整点04分执行方法
      */
-    @Scheduled(cron = "0 4 0/1 * * ?")//0 0/1 * * * ?  0 4 0/1 * * ?
+    @Scheduled(cron = "0 10 0/1 * * ?")//0 0/1 * * * ?
     public void testSca() throws Exception {
         Date today = new Date();
         //每小时数据获取
@@ -51,21 +54,11 @@ public class HourDataTask {
         List<HourVo> listByNid = hourMapper.selectDayByNid(nidList, date);
         Map<Integer, List<HourVo>> map = pullBiz.getHourMap(listByNid);
         for (int k : map.keySet()) {
-            producerImpl.sendRealHourMsg(map.get(k));
+            //producerImpl.sendRealHourMsg(map.get(k));
             logger.info("在{}获得的hour数据量{}条", date, listByNid.size());
         }
     }
 
-    public static void main(String[] args) {
-        Date today = new Date();
-        //每小时数据获取
-        Calendar ca = Calendar.getInstance();
-        ca.set(Calendar.MINUTE, 0);
-        ca.set(Calendar.SECOND, 0);
-        today = ca.getTime();
 
-        String date = DateTransform.Date2String(today, "yyyy-MM-dd HH:mm:ss");
-        System.out.println(date);
-    }
 
 }

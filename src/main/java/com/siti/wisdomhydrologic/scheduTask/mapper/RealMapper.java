@@ -17,5 +17,11 @@ public interface RealMapper {
 
     @Select("<script>select * from rtsq t where TIME = TO_DATE(#{dateStart},'YYYY-MM-DD HH24:MI:SS') " +
             " and senid in(<foreach collection=\"nidList\" item=\"item\" separator=\",\">#{item}</foreach>)</script>")
-    List<RealVo> getLatest5MinData(@Param("dateStart") String date,@Param("nidList") List<Integer> nidList);
+    List<RealVo> getLatest5MinData(@Param("dateStart") String dateStart, @Param("nidList") List<Integer> nidList);
+
+    @Select("<script>select * from rtsq t where TIME &gt;= TO_DATE(#{dateStart},'YYYY-MM-DD HH24:MI:SS') " +
+            "and time &lt;= TO_DATE(#{dateEnd},'YYYY-MM-DD HH24:MI:SS') " +
+            " and senid in(<foreach collection=\"nidList\" item=\"item\" separator=\",\">#{item}</foreach>)</script>")
+    List<RealVo> gethistory5MinData(@Param("dateStart") String dateStart, @Param("dateEnd") String dateEnd, @Param("nidList") List<Integer> nidList);
+
 }

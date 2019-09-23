@@ -16,9 +16,9 @@ public interface TSDBMapper {
 
     @Select("<script>select * from " +
             "(select s.*,rownum rowN from TSDB s where SENID = #{senid} and " +
-            " TO_CHAR(TIME,'yyyy')=#{date}) m " + /*and  rownum<#{all} */
+            " TO_CHAR(TIME,'yyyy-MM-dd')=#{date}) m " +
             "where m.rowN between #{begin} and #{end}</script>")
-    List<TSDBVo> selectByConditions(@Param("date")String date, @Param("all")int all, @Param("begin")int begin, @Param("end")int end,@Param("senid") Integer senid );
+    List<TSDBVo> selectByConditions(@Param("date") String date, @Param("all") int all, @Param("begin") int begin, @Param("end") int end, @Param("senid") Integer senid);
 
     @Select("SELECT SENID FROM TSDB GROUP BY SENID")
     List<Integer> selectTSDBSenId();

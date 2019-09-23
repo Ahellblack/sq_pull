@@ -42,12 +42,12 @@ public class TSDBController {
     TSDBMapper tsdbMapper;
 
     @GetMapping("/getdata")
-    public void startPull() throws ParseException {
+    public void startPull(String startTime,String endTime) throws ParseException {
        /* //获取最新日期
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY");*/
         DatesUtils datesUtils = new DatesUtils();
         //得到一个从数据存在的最早日期到当前日期的list
-        List<String> datesList = datesUtils.findDates(Start_Time, End_Time); /*simpleDateFormat.format(new Date())*/
+        List<String> datesList = datesUtils.findDayDates(startTime, endTime); /*simpleDateFormat.format(new Date())*/
         System.out.println("从数据时间asc到目前的年共有" + datesList);
         //获取所有传感器模块的NID
         List<Integer> nidList = NidListUtils.getNidList();
@@ -63,7 +63,7 @@ public class TSDBController {
                     Sum = Sum + list.size();
                     map = pullBiz.getTSDBMap(list);
                     for (int k : map.keySet()) {
-                        producerImpl.sendRealTSDBMsg(map.get(k));
+                        //producerImpl.sendRealTSDBMsg(map.get(k));
                     }
                     logger.info("nid为{}处于{}年的数据,合计打包{}条数据", nid, date, Sum);
                 }

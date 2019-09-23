@@ -46,12 +46,12 @@ public class DataPullController {
 
 
     @GetMapping("/getdata")
-    public void startPull() throws ParseException {
+    public void startPull(String startTime,String endTime) throws ParseException {
         //获取最新日期
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY");
         DatesUtils datesUtils = new DatesUtils();
         //得到一个从数据存在的最早日期到当前日期的list
-        List<String> datesList = datesUtils.findDates(Start_Time, End_Time);
+        List<String> datesList = datesUtils.findDayDates(startTime, endTime);
         List<Integer> nidList = NidListUtils.getNidList();
         Map<Integer, List<DayVo>> map = new HashMap<>();
         int index = 0;
@@ -64,7 +64,7 @@ public class DataPullController {
                     for (int k : map.keySet()) {
                         sum = sum + map.get(k).size();
                         logger.info("第{}年的day数据,合计共{}条", date, sum);
-                        producerImpl.sendRealDayMsg(map.get(k));
+                        //producerImpl.sendRealDayMsg(map.get(k));
                     }
                 }
             }

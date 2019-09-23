@@ -1,13 +1,12 @@
 package com.siti.wisdomhydrologic.config;
 
-import com.sun.istack.internal.Nullable;
+//import com.sun.istack.internal.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.rabbit.support.CorrelationData;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Value;
@@ -99,7 +98,7 @@ public class RabbitMQConfig {
         rabbitTemplate.setEncoding("UTF-8");
         rabbitTemplate.setMandatory(true);
         rabbitTemplate.setReturnCallback(msgReturnCallback);
-        rabbitTemplate.setConfirmCallback(msgConfirmCallback);
+        //rabbitTemplate.setConfirmCallback(msgConfirmCallback);
         rabbitTemplate.setMessageConverter(jsonMessageConverter());
 
         return rabbitTemplate;
@@ -233,7 +232,7 @@ public class RabbitMQConfig {
         }
     };
 
-    //消息发送到交换器时触发
+   /* //消息发送到交换器时触发
     RabbitTemplate.ConfirmCallback msgConfirmCallback=new RabbitTemplate.ConfirmCallback() {
         @Override
         public void confirm(@Nullable CorrelationData correlationData, boolean b, @Nullable String s) {
@@ -243,5 +242,5 @@ public class RabbitMQConfig {
                 logger.info("消息发送到exchange失败，原因：{}",s);
             }
         }
-    };
+    };*/
 }

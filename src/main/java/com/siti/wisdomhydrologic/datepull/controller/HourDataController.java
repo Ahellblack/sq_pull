@@ -1,7 +1,5 @@
 package com.siti.wisdomhydrologic.datepull.controller;
 
-import com.siti.wisdomhydrologic.datepull.service.ElementService;
-import com.siti.wisdomhydrologic.datepull.service.NodeService;
 import com.siti.wisdomhydrologic.datepull.service.impl.FetchDataImpl;
 import com.siti.wisdomhydrologic.datepull.vo.HourVo;
 import com.siti.wisdomhydrologic.rabbitmq.service.impl.ProducerImpl;
@@ -38,18 +36,15 @@ public class HourDataController {
     ProducerImpl producerImpl;
     @Resource
     PullBiz pullBiz;
-    @Resource
-    private ElementService elementService;
-    @Resource
-    private NodeService nodeService;
+
 
     @GetMapping("/getdata")
-    public void startPull() throws ParseException {
+    public void startPull(String startTime,String endTime) throws ParseException {
         //获取最新日期
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM");
         DatesUtils datesUtils = new DatesUtils();
         //得到一个从数据存在的最早日期到当前日期的list
-        List<String> datesList = datesUtils.findMonthDates(Start_Time, End_Time);
+        List<String> datesList = datesUtils.findDayDates(startTime, endTime);
         System.out.println(datesList);
         List<Integer> nidList = NidListUtils.getNidList();
         Map<Integer, List<HourVo>> map = new HashMap<>();
@@ -62,7 +57,7 @@ public class HourDataController {
                     for (int k : map.keySet()) {
                         sum = sum + map.get(k).size();
                         logger.info("NID为{}在第{}年的Hour数据,合计共{}条", nid, date, sum);
-                        producerImpl.sendRealHourMsg(map.get(k));
+                        //producerImpl.sendRealHourMsg(map.get(k));
                     }
                 }
             }
