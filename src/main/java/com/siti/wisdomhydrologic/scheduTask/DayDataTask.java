@@ -49,7 +49,7 @@ public class DayDataTask {
         List<DayVo> dayVoList = dayMapper.selectRealDay(nidList,date);
         Map<Integer, List<DayVo>> map = pullBiz.getMap(dayVoList);
         for (int k : map.keySet()) {
-           // producerImpl.sendRealDayMsg(map.get(k));
+            producerImpl.sendRealDayMsg(map.get(k));
 
             logger.info("在{}获得的day数据{}条", date,dayVoList.size());
         }

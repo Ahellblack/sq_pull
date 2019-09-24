@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/sqPull.iml" filepath="$PROJECT_DIR$/.idea/sqPull.iml" />
       <module fileurl="file://$PROJECT_DIR$/wisdomhydrologic.iml" filepath="$PROJECT_DIR$/wisdomhydrologic.iml" />
     </modules>
   </component>

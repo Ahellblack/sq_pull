@@ -54,7 +54,7 @@ public class HourDataTask {
         List<HourVo> listByNid = hourMapper.selectDayByNid(nidList, date);
         Map<Integer, List<HourVo>> map = pullBiz.getHourMap(listByNid);
         for (int k : map.keySet()) {
-            //producerImpl.sendRealHourMsg(map.get(k));
+            producerImpl.sendRealHourMsg(map.get(k));
             logger.info("在{}获得的hour数据量{}条", date, listByNid.size());
         }
     }

@@ -11,11 +11,11 @@ public class RealVo {
 
     private Integer senId;
     private Date Time;
-    private Integer FACTV;
-    private Integer IFCH;
-    private Integer CYCLE;
-    private Integer STATE;
-    private Integer TS;
+    private Double FACTV;
+    private Double IFCH;
+    private Double CYCLE;
+    private Double STATE;
+    private Double TS;
 
     /**
      * 为mq传入是做判断丢包添加的字段
@@ -43,43 +43,43 @@ public class RealVo {
         Time = time;
     }
 
-    public Integer getFACTV() {
+    public Double getFACTV() {
         return FACTV;
     }
 
-    public void setFACTV(Integer FACTV) {
+    public void setFACTV(Double FACTV) {
         this.FACTV = FACTV;
     }
 
-    public Integer getIFCH() {
+    public Double getIFCH() {
         return IFCH;
     }
 
-    public void setIFCH(Integer IFCH) {
+    public void setIFCH(Double IFCH) {
         this.IFCH = IFCH;
     }
 
-    public Integer getCYCLE() {
+    public Double getCYCLE() {
         return CYCLE;
     }
 
-    public void setCYCLE(Integer CYCLE) {
+    public void setCYCLE(Double CYCLE) {
         this.CYCLE = CYCLE;
     }
 
-    public Integer getSTATE() {
+    public Double getSTATE() {
         return STATE;
     }
 
-    public void setSTATE(Integer STATE) {
+    public void setSTATE(Double STATE) {
         this.STATE = STATE;
     }
 
-    public Integer getTS() {
+    public Double getTS() {
         return TS;
     }
 
-    public void setTS(Integer TS) {
+    public void setTS(Double TS) {
         this.TS = TS;
     }
 
