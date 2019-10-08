@@ -38,26 +38,22 @@ public class RealDataTask {
     public void testSca() throws Exception {
         Date today = new Date();
         //获取前一个整5分数据
-        String dateStart = getCloseDate("yyyy-MM-dd HH:mm:ss", today, 5);
-        /*System.out.println("#########"+dateStart);*/
+        String dateStart = getCloseDate("yyyy-MM-dd HH:mm:ss", today, 5);/*
         Calendar cal = Calendar.getInstance();
         cal.setTime(DateTransform.String2Date(dateStart, "yyyy-MM-dd HH:mm:ss"));
         //往前推5分钟
         cal.add(Calendar.MINUTE, -5);
-        String dateEnd = DateTransform.Date2String(cal.getTime(), "yyyy-MM-dd HH:mm:ss");
+        String dateEnd = DateTransform.Date2String(cal.getTime(), "yyyy-MM-dd HH:mm:ss");*/
         List<Integer> nidList = NidListUtils.getNidList();
         //获取276个传感器在这个时间前5分钟的数据
-        List<RealVo> list = realMapper.getLatest5MinData(dateEnd, nidList);
-        Map<Integer, List<RealVo>> map = pullBiz.getRealMap(list);
-        SimpleDateFormat sdf = new SimpleDateFormat("mmss");
-        map.forEach((key, rlist) -> {
-            producerImpl.sendRealMsg(list);
-            //整点打印
-            String mmss = sdf.format(list.get(0).getTime());
-            if ("0000".equals(mmss)) {
-                logger.info("在{}时间,获取5分钟内的real数据共{}条", dateEnd, list.size());
-            }
-        });
+        List<RealVo> list = realMapper.getLatestDataNew(nidList);
+        if (list.size() > 0) {
+            Map<Integer, List<RealVo>> map = pullBiz.getRealMap(list);
+            map.forEach((key, rlist) -> {
+                //producerImpl.sendRealMsg(list);
+                    logger.info("在{}时间,获取25分钟前的real数据共{}条", dateStart, list.size());
+            });
+        }
     }
 
     /**

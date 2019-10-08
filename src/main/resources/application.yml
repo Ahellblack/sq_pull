@@ -16,5 +16,5 @@ version:
   build: 1111 # 小版本号
 
 server:
-  port: 8098
+  port: 8097
   context-path: /wisdomhydrologic

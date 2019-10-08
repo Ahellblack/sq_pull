@@ -301,7 +301,6 @@ public class PullBiz {
                     real.setCurrentSize(size);
                     real.setStatus(1);
                     l.add(real);
-                    System.out.println("最后一个包的第一个数据" + real);
                 } else if (l.size() == 0 && map.size() != batch) {
                     real.setCurrentBatch(mapSize);
                     real.setSumSize(size);
@@ -309,7 +308,6 @@ public class PullBiz {
                     real.setMaxBatch(batch);
                     real.setStatus(0);
                     l.add(real);
-                    System.out.println("每个包的第一个数据" + real);
                 } else if (map.size() == batch && l.size() == size % LIST_SIZE) {
                     return map;
                 } else {

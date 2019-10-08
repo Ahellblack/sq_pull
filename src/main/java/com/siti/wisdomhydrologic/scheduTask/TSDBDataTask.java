@@ -32,7 +32,7 @@ public class TSDBDataTask {
     PullBiz pullBiz;
 
     //每个整点04分执行方法
-    @Scheduled(cron = "0 4 0/1 * * ?")//0/5 * * * * ?   0 4 0/1 * * ?
+    @Scheduled(cron = "0 10 0/1 * * ?")//0/5 * * * * ?   0 4 0/1 * * ?
     public void testSca() throws Exception {
         Date today = new Date();
 
@@ -40,6 +40,7 @@ public class TSDBDataTask {
         Calendar ca = Calendar.getInstance();
         ca.set(Calendar.MINUTE, 0);
         ca.set(Calendar.SECOND, 0);
+        ca.add(Calendar.HOUR,-1);
         today = ca.getTime();
 
         String date = DateTransform.Date2String(today, "yyyy-MM-dd HH:mm:ss");
