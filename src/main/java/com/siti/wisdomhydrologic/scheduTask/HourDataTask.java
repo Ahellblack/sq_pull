@@ -39,7 +39,7 @@ public class HourDataTask {
      * HourDB数据拉取
      * 每个整点04分执行方法
      */
-    @Scheduled(cron = "0 0/1 * * * ?")//0 0/1 * * * ?
+    //@Scheduled(cron = "0 10 0/1 * * ?")//0 0/1 * * * ?
     public void testSca() throws Exception {
         Date today = new Date();
         //每小时数据获取
@@ -54,7 +54,7 @@ public class HourDataTask {
         List<HourVo> listByNid = hourMapper.selectDayByNid(nidList, date);
         Map<Integer, List<HourVo>> map = pullBiz.getHourMap(listByNid);
         for (int k : map.keySet()) {
-           // producerImpl.sendRealHourMsg(map.get(k));
+           //producerImpl.sendRealHourMsg(map.get(k));
             logger.info("在{}获得的hour数据量{}条", date, listByNid.size());
         }
     }

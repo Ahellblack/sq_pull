@@ -69,6 +69,35 @@ public class TSDBController {
         }
     }
 
+    @GetMapping("/getTestData")
+    public void startTestPull(String startTime, String endTime) throws ParseException {
+       /* //获取最新日期
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY");*/
+        DatesUtils datesUtils = new DatesUtils();
+        //得到一个从数据存在的最早日期到当前日期的list
+        List<String> datesList = datesUtils.findDayDates(startTime, endTime); /*simpleDateFormat.format(new Date())*/
+        System.out.println("从数据时间asc到目前的年共有" + datesList);
+        //获取所有传感器模块的NID
+        List<Integer> nidList = NidListUtils.getNidList();
+        Map<Integer, List<TSDBVo>> map = new HashMap<>();
+        int index = 0;
+        int Sum = 0;
+        Long start = System.currentTimeMillis();
+        //查询索引日期+NID
+        for (String date : datesList) {
+            List<TSDBVo> list = tsdbMapper.selectTestByConditions(date, MAX_SIZE, index * MAX_SIZE, (index + 1) * MAX_SIZE, nidList);
+            if (list.size() > 0) {
+                Sum = Sum + list.size();
+                map = pullBiz.getTSDBMap(list);
+                for (int k : map.keySet()) {
+                    producerImpl.sendRealTSDBMsg(map.get(k));
+                }
+                logger.info("处于{}年的数据,合计打包{}条数据", date, Sum);
+            }
+        }
+    }
+
+
     @RequestMapping("/getRealTSDB")
     public void getTsdbTest() {
         Date today = new Date();

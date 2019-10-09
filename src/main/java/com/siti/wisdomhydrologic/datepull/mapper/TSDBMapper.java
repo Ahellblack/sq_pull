@@ -21,6 +21,15 @@ public interface TSDBMapper {
             "where m.rowN between #{begin} and #{end}</script>")
     List<TSDBVo> selectByConditions(@Param("date") String date, @Param("all") int all, @Param("begin") int begin, @Param("end") int end, @Param("nidList")List<Integer> nidList);
 
+    @Select("<script>select * from " +
+            "(select s.*,rownum rowN from TSDB s " +
+            "where SENID in (<foreach collection=\"nidList\" item=\"item\" separator=\",\"> #{item}</foreach>)  " +
+            " and time = #{date} ) m " +
+            "where m.rowN between #{begin} and #{end}</script>")
+    List<TSDBVo> selectTestByConditions(@Param("date") String date, @Param("all") int all, @Param("begin") int begin, @Param("end") int end, @Param("nidList")List<Integer> nidList);
+
+
+
     @Select("SELECT SENID FROM TSDB GROUP BY SENID")
     List<Integer> selectTSDBSenId();
 

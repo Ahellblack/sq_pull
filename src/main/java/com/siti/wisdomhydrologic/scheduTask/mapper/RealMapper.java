@@ -31,4 +31,14 @@ public interface RealMapper {
             " and senid in(<foreach collection=\"nidList\" item=\"item\" separator=\",\">#{item}</foreach>)</script>")
     List<RealVo> gethistory5MinData(@Param("dateStart") String dateStart, @Param("dateEnd") String dateEnd, @Param("nidList") List<Integer> nidList);
 
+    @Select("<script>select * from rtsq t where TIME = TO_DATE(#{time},'YYYY-MM-DD HH24:MI:SS') " +
+            " and senid in(<foreach collection=\"nidList\" item=\"item\" separator=\",\">#{item}</foreach>)</script>")
+    List<RealVo> gethistory5MinDataTest(@Param("time") String time, @Param("nidList") List<Integer> nidList);
+
+    @Select("<script>select * from T_RTSQ t where TIME = #{time} " +
+            " and senid in(<foreach collection=\"nidList\" item=\"item\" separator=\",\">#{item}</foreach>)</script>")
+    List<RealVo> getTestHistory5MinDataTest(@Param("time") String time, @Param("nidList") List<Integer> nidList);
+
+
+
 }

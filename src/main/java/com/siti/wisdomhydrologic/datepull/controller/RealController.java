@@ -62,5 +62,29 @@ public class RealController {
         }
     }
 
+    @GetMapping("getTestData")
+    public void getTestData(String startTime, String endTime) {
+        Map<Integer, List<RealVo>> map = new HashMap<>();
+        int index = 0;
+        int sum = 0;
+        List<Integer> nidList = NidListUtils.getNidList();
+        DatesUtils datesUtils = new DatesUtils();
+        try {
+            List<String> datesList = datesUtils.findMinDates(startTime, endTime);
+            for (String date : datesList) {
+                List<RealVo> list = realMapper.getTestHistory5MinDataTest(date, nidList);
+                if (list.size() > 0) {
+                    sum = sum + list.size();
+                    map = pullBiz.getRealMap(list);
+                    for (int k : map.keySet()) {
+                      //  producerImpl.sendRealMsg(map.get(k));
+                    }
+                    logger.info("处于{}的real数据,合计打包{}条数据", date, sum);
+                }
+            }
+        } catch (ParseException e) {
+        }
+    }
+
 
 }

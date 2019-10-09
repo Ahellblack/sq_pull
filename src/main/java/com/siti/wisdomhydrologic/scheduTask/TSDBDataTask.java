@@ -32,7 +32,7 @@ public class TSDBDataTask {
     PullBiz pullBiz;
 
     //每个整点04分执行方法
-    @Scheduled(cron = "0 10 0/1 * * ?")//0/5 * * * * ?   0 4 0/1 * * ?
+    //@Scheduled(cron = "0 10 0/1 * * ?")//0/5 * * * * ?   0 4 0/1 * * ?
     public void testSca() throws Exception {
         Date today = new Date();
 

@@ -32,8 +32,7 @@ import java.util.Map;
 public class DataPullController {
     public static final Logger logger = LoggerFactory.getLogger(DataPullController.class);
     public static final int MAX_SIZE = 10000;
-    public static final String Start_Time = "2019";
-    public static final String End_Time = "2019";
+
 
     @Resource
     FetchDataImpl fetchDataImpl;
@@ -62,7 +61,7 @@ public class DataPullController {
                 map = pullBiz.getMap(list);
                 for (int k : map.keySet()) {
                     sum = sum + map.get(k).size();
-                    logger.info("第{}天的day数据,合计共{}条", date, sum);
+                    logger.info("{}的day数据,合计共{}条", date, sum);
                     producerImpl.sendRealDayMsg(map.get(k));
                 }
             }
