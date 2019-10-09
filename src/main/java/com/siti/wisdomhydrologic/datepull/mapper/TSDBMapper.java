@@ -24,7 +24,7 @@ public interface TSDBMapper {
     @Select("<script>select * from " +
             "(select s.*,rownum rowN from TSDB s " +
             "where SENID in (<foreach collection=\"nidList\" item=\"item\" separator=\",\"> #{item}</foreach>)  " +
-            " and time = #{date} ) m " +
+            " and DATE_FORMAT(time,'%Y-%m-%d') = #{date} ) m " +
             "where m.rowN between #{begin} and #{end}</script>")
     List<TSDBVo> selectTestByConditions(@Param("date") String date, @Param("all") int all, @Param("begin") int begin, @Param("end") int end, @Param("nidList")List<Integer> nidList);
 
