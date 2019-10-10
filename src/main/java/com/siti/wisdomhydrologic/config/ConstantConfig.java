@@ -11,6 +11,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 public class ConstantConfig extends WebMvcConfigurerAdapter {
 
+    public static final String NIDURL = "http://172.20.50.115:8080/sq/module/getAllNid";
+    public static final String NIDTESTURL = "http://10.1.30.210:50081/sq/module/getAllNid";
+
 /*
 
     */

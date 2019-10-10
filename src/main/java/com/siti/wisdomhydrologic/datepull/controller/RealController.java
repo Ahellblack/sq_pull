@@ -53,7 +53,7 @@ public class RealController {
                     sum = sum + list.size();
                     map = pullBiz.getRealMap(list);
                     for (int k : map.keySet()) {
-                        producerImpl.sendRealMsg(map.get(k));
+                        //producerImpl.sendRealMsg(map.get(k));
                     }
                     logger.info("处于{}的real数据,合计打包{}条数据", date, sum);
                 }
