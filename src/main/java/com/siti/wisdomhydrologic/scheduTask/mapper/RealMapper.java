@@ -20,8 +20,8 @@ public interface RealMapper {
     List<RealVo> getLatest5MinData(@Param("dateStart") String dateStart, @Param("nidList") List<Integer> nidList);
 
     @Select("<script>select * from rtsq t " +
-            "where time &gt;= sysdate-25/(24*60)  " +
-            "and time &lt; sysdate-20/(24*60) " +
+            "where time &gt;= sysdate-15/(24*60)  " +
+            "and time &lt; sysdate-10/(24*60) " +
             "and senid in" +
             "(<foreach collection=\"nidList\" item=\"item\" separator=\",\">#{item}</foreach>)</script>")
     List<RealVo> getLatestDataNew( @Param("nidList") List<Integer> nidList);

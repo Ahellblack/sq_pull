@@ -43,7 +43,7 @@ public class HourDataController {
 
 
     @GetMapping("/getdata")
-    public void startPull(String startTime, String endTime) throws ParseException {
+    public int startPull(String startTime, String endTime) throws ParseException {
         //获取最新日期
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM");
         DatesUtils datesUtils = new DatesUtils();
@@ -53,20 +53,23 @@ public class HourDataController {
         List<Integer> nidList = NidListUtils.getNidList();
         Map<Integer, List<HourVo>> map = new HashMap<>();
         int sum = 0;
+        int index = 0;
             for (String date : datesList) {
                 List<HourVo> list = fetchDataImpl.selectByHourCondition(nidList, date);
                 if (list.size() > 0) {
                     map = pullBiz.getHourMap(list);
                     for (int k : map.keySet()) {
+                        index = index +1;
                         sum = sum + map.get(k).size();
-                        logger.info("在第{}年的Hour数据,合计共{}条", date, sum);
+                        logger.info("在第{}年的Hour数据,合计共{}条,合计{}个包", date, sum,index);
                         producerImpl.sendRealHourMsg(map.get(k));
                     }
                 }
             }
+        return sum;
     }
     @GetMapping("/getTestData")
-    public void startTestPull(String startTime, String endTime) throws ParseException {
+    public int startTestPull(String startTime, String endTime) throws ParseException {
         //获取最新日期
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM");
         DatesUtils datesUtils = new DatesUtils();
@@ -76,17 +79,20 @@ public class HourDataController {
         List<Integer> nidList = NidListUtils.getNidList();
         Map<Integer, List<HourVo>> map = new HashMap<>();
         int sum = 0;
+        int index = 0;
         for (String date : datesList) {
             List<HourVo> list = hourMapper.selectTestByConditions(nidList,date);
             if (list.size() > 0) {
                 map = pullBiz.getHourMap(list);
                 for (int k : map.keySet()) {
+                    index = index +1;
                     sum = sum + map.get(k).size();
-                    logger.info("在第{}年的Hour数据,合计共{}条", date, sum);
+                    logger.info("在第{}年的Hour数据,合计共{}条,合计{}个包", date, sum,index);
                     producerImpl.sendRealHourMsg(map.get(k));
                 }
             }
         }
+        return sum;
     }
 
     @GetMapping("/getrealdata")

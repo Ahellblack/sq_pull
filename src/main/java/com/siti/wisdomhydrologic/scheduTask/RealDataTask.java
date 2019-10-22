@@ -34,7 +34,7 @@ public class RealDataTask {
     @Resource
     PullBiz pullBiz;
 
-    //@Scheduled(cron = "0 2/5 * * * ?")//0 2/5 * * * ?
+    @Scheduled(cron = "0 0/5 * * * ?")//0 2/5 * * * ?
     public void testSca() throws Exception {
         Date today = new Date();
         //获取前一个整5分数据

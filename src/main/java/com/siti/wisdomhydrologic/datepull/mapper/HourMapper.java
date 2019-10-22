@@ -15,7 +15,7 @@ public interface HourMapper {
     int selectHourCount(@Param("date") String date);
 
 
-    @Select("<script>select * from T_HOURDB where time = TO_DATE(#{date} ,'YYYY-MM-dd') and" +
+    @Select("<script>select * from HOURDB where time = TO_DATE(#{date} ,'YYYY-MM-dd') and" +
             " SENID in (<foreach collection=\"nidList\" item=\"item\" separator=\",\">#{item}</foreach>) " +
             "</script> ")
     List<HourVo> selectByConditions(@Param("nidList") List<Integer> nidList, @Param("date") String date);

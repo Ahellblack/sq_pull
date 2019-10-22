@@ -39,7 +39,7 @@ public class RealController {
     private RealMapper realMapper;
 
     @GetMapping("getdata")
-    public void getData(String startTime, String endTime) {
+    public int getData(String startTime, String endTime) {
         Map<Integer, List<RealVo>> map = new HashMap<>();
         int index = 0;
         int sum = 0;
@@ -50,20 +50,22 @@ public class RealController {
             for (String date : datesList) {
                 List<RealVo> list = realMapper.gethistory5MinDataTest(date, nidList);
                 if (list.size() > 0) {
+                    index = index +1;
                     sum = sum + list.size();
                     map = pullBiz.getRealMap(list);
                     for (int k : map.keySet()) {
                         producerImpl.sendRealMsg(map.get(k));
                     }
-                    logger.info("处于{}的real数据,合计打包{}条数据", date, sum);
+                    logger.info("处于{}的real数据,合计打包{}条数据,合计{}个包", date, sum,index);
                 }
             }
             } catch (ParseException e) {
         }
+        return sum;
     }
 
     @GetMapping("getTestData")
-    public void getTestData(String startTime, String endTime) {
+    public int getTestData(String startTime, String endTime) {
         Map<Integer, List<RealVo>> map = new HashMap<>();
         int index = 0;
         int sum = 0;
@@ -74,16 +76,18 @@ public class RealController {
             for (String date : datesList) {
                 List<RealVo> list = realMapper.getTestHistory5MinDataTest(date, nidList);
                 if (list.size() > 0) {
+                    index = index +1;
                     sum = sum + list.size();
                     map = pullBiz.getRealMap(list);
                     for (int k : map.keySet()) {
                       producerImpl.sendRealMsg(map.get(k));
                     }
-                    logger.info("处于{}的real数据,合计打包{}条数据", date, sum);
+                    logger.info("处于{}的real测试数据,合计打包{}条数据,合计{}个包", date, sum,index);
                 }
             }
         } catch (ParseException e) {
         }
+        return sum;
     }
 
 
