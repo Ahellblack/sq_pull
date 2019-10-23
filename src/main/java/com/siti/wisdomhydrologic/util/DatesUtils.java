@@ -72,6 +72,26 @@ public class DatesUtils {
         return dateList;
     }
     //JAVA获取某段时间内的所有日期
+    public static List<String> findHourDates(String dStart, String dEnd) throws ParseException {
+        Calendar cStart = Calendar.getInstance();
+        SimpleDateFormat formatter = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss");
+        Date dS = formatter.parse(dStart);
+        Date dE = formatter.parse(dEnd);
+        cStart.setTime(dS);
+
+        List dateList = new ArrayList();
+        //别忘了，把起始日期加上
+        dateList.add(formatter.format(dS));
+        // 此日期是否在指定日期之后
+        while (dE.after(cStart.getTime())) {
+            // 根据日历的规则，为给定的日历字段添加或减去指定的时间量
+            cStart.add(Calendar.HOUR, 1);
+            dateList.add(formatter.format(cStart.getTime()));
+        }
+        return dateList;
+    }
+
+    //JAVA获取某段时间内的所有日期
     public static List<String> findMinDates(String dStart, String dEnd) throws ParseException {
         Calendar cStart = Calendar.getInstance();
         SimpleDateFormat formatter = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss");
@@ -129,7 +149,10 @@ public class DatesUtils {
 
         String sdate1 = "2019-09-09 00:35:00";
         String edate1 = "2019-09-09 02:30:00";
-        System.out.println(findMinDates(sdate1,edate1));
+        //System.out.println(findMinDates(sdate1,edate1));
+        System.out.println(findHourDates(sdate1,edate1));
+
+
 
 
 
