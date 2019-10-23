@@ -1,11 +1,15 @@
 quartz:
   enabled: true
+
+server:
+  port: 8081
+  context-path: /wisdomhydrologic
+
 spring:
   thymeleaf:
     mode: LEGACYHTML5
   profiles:
-     active: siti
-
+     active: prod
   application:
     name: wisdomhydrologic
 mybatis:
@@ -15,6 +19,3 @@ version:
   calversion: "V1.1" # 版本号
   build: 1111 # 小版本号
 
-server:
-  port: 8097
-  context-path: /wisdomhydrologic
