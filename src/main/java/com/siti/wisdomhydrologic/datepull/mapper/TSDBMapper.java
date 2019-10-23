@@ -17,7 +17,7 @@ public interface TSDBMapper {
     @Select("<script>select * from " +
             "(select s.*,rownum rowN from TSDB s " +
             "where SENID in (<foreach collection=\"nidList\" item=\"item\" separator=\",\"> #{item}</foreach>)  " +
-            " and TO_CHAR(TIME,'yyyy-MM-dd')=#{date}) m " +
+            " and time = TO_DATE(#{date} ,'YYYY-MM-dd HH24:mi:ss')) m " +
             "where m.rowN between #{begin} and #{end}</script>")
     List<TSDBVo> selectByConditions(@Param("date") String date, @Param("all") int all, @Param("begin") int begin, @Param("end") int end, @Param("nidList")List<Integer> nidList);
 
