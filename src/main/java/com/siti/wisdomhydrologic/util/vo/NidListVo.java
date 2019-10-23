@@ -1,6 +1,6 @@
 package com.siti.wisdomhydrologic.util.vo;
 
-import com.sun.tools.javac.util.List;
+import java.util.List;
 
 /**
  * Created by dell on 2019/10/10.

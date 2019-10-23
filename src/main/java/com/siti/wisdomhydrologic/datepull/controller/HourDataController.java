@@ -48,7 +48,7 @@ public class HourDataController {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM");
         DatesUtils datesUtils = new DatesUtils();
         //得到一个从数据存在的最早日期到当前日期的list
-        List<String> datesList = datesUtils.findDayDates(startTime, endTime);
+        List<String> datesList = datesUtils.findHourDates(startTime, endTime);
         System.out.println(datesList);
         List<Integer> nidList = NidListUtils.getNidList();
         Map<Integer, List<HourVo>> map = new HashMap<>();
@@ -95,63 +95,5 @@ public class HourDataController {
         return sum;
     }
 
-    @GetMapping("/getrealdata")
-    public void startRealPull() throws ParseException {
-        //获取最新日期
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM");
-        DatesUtils datesUtils = new DatesUtils();
-        //得到一个从数据存在的最早日期到当前日期的list
-        List<String> datesList = datesUtils.findMonthDates(Start_Time, End_Time);
-        System.out.println(datesList);
-        List<Integer> nidList = NidListUtils.getNidList();
-        Map<Integer, List<HourVo>> map = new HashMap<>();
-        int sum = 0;
-        for (String date : datesList) {
-            List<HourVo> list = fetchDataImpl.selectByHourCondition(nidList, date);
-            if (list.size() > 0) {
-                map = pullBiz.getHourMap(list);
-                for (int k : map.keySet()) {
-                    sum = sum + map.get(k).size();
-                    logger.info("在{}的Hour数据,合计共{}条", date, sum);
-                    producerImpl.sendRealHourMsg(map.get(k));
-                }
-            }
-        }
 
-    }
-
-
-    /*@GetMapping("/getdata")
-        public String startPull() {
-
-
-        String local = "2018-04-01";
-        int size = fetchDataImpl.selectDayCount(local.toString());
-
-        if (size <= 0) {
-            return "数据异常";
-        }
-        int count = pullBiz.getCount(size);
-        Map<Integer, List<HourVo>> map = new HashMap<>();
-        int index = 0;
-        List<HourVo> list = fetchDataImpl.selectByHourCondition(local.toString(), size, index * MAX_SIZE, (index + 1) * MAX_SIZE);
-        List<Element> elementList = elementService.getElement();
-        List<Crunode> nodeList = nodeService.getCrunode();
-        //定义list数据量
-        int listSize = list.size();
-        int eSize = elementList.size();
-        int nSize = nodeList.size();
-        //遍历list与element的nid作对比
-        for (int i = 0; i < listSize; i++) {
-            for (int j = 0; j < eSize; i++) {
-                if (list.get(i).getSenId() == elementList.get(j).getNID()) {
-                }
-            }
-        } map = pullBiz.getMap(list);
-        for (int k : map.keySet()) {
-            producerImpl.sendMsg(map.get(k));
-        }
-        String str = "数据发送结束 共有" + listSize + "条,共发出" + map.size() + "个List";
-        return str;
-    }*/
 }
