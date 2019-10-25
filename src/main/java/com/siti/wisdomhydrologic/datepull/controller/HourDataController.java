@@ -62,7 +62,7 @@ public class HourDataController {
                         index = index +1;
                         sum = sum + map.get(k).size();
                         logger.info("在第{}年的Hour数据,合计共{}条,合计{}个包", date, sum,index);
-                        producerImpl.sendRealHourMsg(map.get(k));
+                        producerImpl.sendHourDBMsg(map.get(k));
                     }
                 }
             }
@@ -88,7 +88,7 @@ public class HourDataController {
                     index = index +1;
                     sum = sum + map.get(k).size();
                     logger.info("在第{}年的Hour数据,合计共{}条,合计{}个包", date, sum,index);
-                    producerImpl.sendRealHourMsg(map.get(k));
+                    producerImpl.sendHourDBMsg(map.get(k));
                 }
             }
         }

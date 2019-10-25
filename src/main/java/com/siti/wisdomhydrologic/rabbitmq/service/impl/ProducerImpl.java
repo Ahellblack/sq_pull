@@ -37,67 +37,43 @@ public class ProducerImpl implements producer {
         this.rabbitTemplate = rabbitTemplate;
         //生产者确认模式
     }
-    /**
-     * 历史day数据拉取
-     */
-    public void sendDayMsg(List<DayVo> list) {
-        CorrelationData correlationId = new CorrelationData(new SnowFlake(1, 1).nextId()+"");
-        //消息默认持久化
-        //把消息放入ROUTINGKEY_A对应的队列当中去，对应的是队列HISTORY_ROUTINGKEY_DAY
-        rabbitTemplate.convertAndSend(RabbitMQConfig.WH_HISTORY_EXCHANGE, RabbitMQConfig.HISTORY_ROUTINGKEY_DAY, list, correlationId);
-    }
+
     /**
      * 实时day数据拉取
      */
-    public void sendRealDayMsg(List<DayVo> list) {
+    public void sendDayDBMsg(List<DayVo> list) {
         CorrelationData correlationId = new CorrelationData(new SnowFlake(1, 1).nextId()+"");
         //消息默认持久化
         //把消息放入ROUTINGKEY_A对应的队列当中去，对应的是队列HISTORY_ROUTINGKEY_DAY
-        rabbitTemplate.convertAndSend(RabbitMQConfig.WH_EXCHANGE, RabbitMQConfig.ROUTINGKEY_DAY, list, correlationId);
+        rabbitTemplate.convertAndSend(RabbitMQConfig.WH_EXCHANGE, RabbitMQConfig.QUEUE_DAY, list, correlationId);
     }
-    /**
-     * 历史hour数据拉取
-     */
-    public void sendHourMsg(List<DayVo> list) {
-        CorrelationData correlationId = new CorrelationData(new SnowFlake(1, 1).nextId()+"");
-        //消息默认持久化
-        //把消息放入ROUTINGKEY_A对应的队列当中去，对应的是队列HISTORY_ROUTINGKEY_HOUR
-        rabbitTemplate.convertAndSend(RabbitMQConfig.WH_HISTORY_EXCHANGE, RabbitMQConfig.HISTORY_ROUTINGKEY_HOUR, list, correlationId);
-    }
+
     /**
      * 实时hour数据拉取
      */
-    public void sendRealHourMsg(List<HourVo> list) {
+    public void sendHourDBMsg(List<HourVo> list) {
         CorrelationData correlationId = new CorrelationData(new SnowFlake(1, 1).nextId()+"");
         //消息默认持久化
         //把消息放入ROUTINGKEY_A对应的队列当中去，对应的是队列HISTORY_ROUTINGKEY_HOUR
-        rabbitTemplate.convertAndSend(RabbitMQConfig.WH_EXCHANGE, RabbitMQConfig.ROUTINGKEY_HOUR, list, correlationId);
+        rabbitTemplate.convertAndSend(RabbitMQConfig.WH_EXCHANGE, RabbitMQConfig.QUEUE_HOUR, list, correlationId);
     }
+
     /**
-     * 历史tsdb数据拉取
+     * 实时tsdb数据拉取
      */
     public void sendTSDBMsg(List<TSDBVo> list) {
         CorrelationData correlationId = new CorrelationData(new SnowFlake(1, 1).nextId()+"");
 
         //消息默认持久化
         //把消息放入ROUTINGKEY_A对应的队列当中去，对应的是队列HISTORY_ROUTINGKEY_TSDB
-        rabbitTemplate.convertAndSend(RabbitMQConfig.WH_HISTORY_EXCHANGE, RabbitMQConfig.HISTORY_ROUTINGKEY_TSDB, list, correlationId);
+        rabbitTemplate.convertAndSend(RabbitMQConfig.WH_EXCHANGE, RabbitMQConfig.QUEUE_TSDB, list, correlationId);
     }
-    /**
-     * 实时tsdb数据拉取
-     */
-    public void sendRealTSDBMsg(List<TSDBVo> list) {
-        CorrelationData correlationId = new CorrelationData(new SnowFlake(1, 1).nextId()+"");
 
-        //消息默认持久化
-        //把消息放入ROUTINGKEY_A对应的队列当中去，对应的是队列HISTORY_ROUTINGKEY_TSDB
-        rabbitTemplate.convertAndSend(RabbitMQConfig.WH_EXCHANGE, RabbitMQConfig.ROUTINGKEY_TSDB, list, correlationId);
-    }
-    public void sendRealMsg(List<RealVo> real) {
+    public void sendRTSQMsg(List<RealVo> real) {
         CorrelationData correlationId = new CorrelationData(new SnowFlake(1, 1).nextId()+"");
         //消息默认持久化
         //把消息放入ROUTINGKEY_A对应的队列当中去，对应的是队列A
-        rabbitTemplate.convertAndSend(RabbitMQConfig.WH_EXCHANGE, RabbitMQConfig.ROUTINGKEY_REAL, real, correlationId);
+        rabbitTemplate.convertAndSend(RabbitMQConfig.WH_EXCHANGE, RabbitMQConfig.QUEUE_REAL, real, correlationId);
     }
 
 }

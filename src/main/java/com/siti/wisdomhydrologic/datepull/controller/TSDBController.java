@@ -62,7 +62,7 @@ public class TSDBController {
                 Sum = Sum + list.size();
                 map = pullBiz.getTSDBMap(list);
                 for (int k : map.keySet()) {
-                    producerImpl.sendRealTSDBMsg(map.get(k));
+                    producerImpl.sendTSDBMsg(map.get(k));
                 }
                 logger.info("处于{}年的数据,合计打包{}条数据", date, Sum);
             }
@@ -90,7 +90,7 @@ public class TSDBController {
                 Sum = Sum + list.size();
                 map = pullBiz.getTSDBMap(list);
                 for (int k : map.keySet()) {
-                    producerImpl.sendRealTSDBMsg(map.get(k));
+                    producerImpl.sendTSDBMsg(map.get(k));
                 }
                 logger.info("处于{}年的数据,合计打包{}条数据", date, Sum);
             }
@@ -105,7 +105,7 @@ public class TSDBController {
         List<Integer> nidList = NidListUtils.getNidList();
         System.out.println(nidList);
         List<TSDBVo> tsdbVoList = tsdbMapper.selectRealTSDB(nidList, date);
-        producerImpl.sendRealTSDBMsg(tsdbVoList);
+        producerImpl.sendTSDBMsg(tsdbVoList);
         logger.info("在{}获得的TSDB数据数{}", date, tsdbVoList.size());
     }
 

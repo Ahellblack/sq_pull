@@ -1,6 +1,7 @@
 package com.siti.wisdomhydrologic.rabbitmq.service;
 
 import com.siti.wisdomhydrologic.datepull.vo.DayVo;
+import com.siti.wisdomhydrologic.datepull.vo.HourVo;
 import com.siti.wisdomhydrologic.datepull.vo.RealVo;
 import com.siti.wisdomhydrologic.datepull.vo.TSDBVo;
 
@@ -13,9 +14,9 @@ import java.util.List;
  */
 public interface producer {
 
-    public void sendDayMsg(List<DayVo> list);
-    public void sendHourMsg(List<DayVo> list);
-    public void sendTSDBMsg(List<TSDBVo> list);
-    public void sendRealMsg(List<RealVo> real);
+    public void sendDayDBMsg(List<DayVo> dayVoList);
+    public void sendHourDBMsg(List<HourVo> hourVoList);
+    public void sendTSDBMsg(List<TSDBVo> tsdbVoList);
+    public void sendRTSQMsg(List<RealVo> realVoList);
 
 }

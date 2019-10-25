@@ -50,7 +50,7 @@ public class TSDBDataTask {
         Map<Integer, List<TSDBVo>> map = pullBiz.getTSDBMap(TSDBVoList);
         for (int k : map.keySet()) {
             logger.info("在{}的tsdb数据{}条", date,TSDBVoList.size());
-            producerImpl.sendRealTSDBMsg(map.get(k));
+            producerImpl.sendTSDBMsg(map.get(k));
         }
     }
 

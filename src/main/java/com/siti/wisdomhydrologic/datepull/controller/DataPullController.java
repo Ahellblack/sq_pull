@@ -62,7 +62,7 @@ public class DataPullController {
                 for (int k : map.keySet()) {
                     sum = sum + map.get(k).size();
                     logger.info("{}的day数据,合计共{}条", date, sum);
-                    producerImpl.sendRealDayMsg(map.get(k));
+                    producerImpl.sendDayDBMsg(map.get(k));
                 }
             }
         }
@@ -75,7 +75,7 @@ public class DataPullController {
         List<Integer> nidList = NidListUtils.getNidList();
         List<DayVo> dayVoList = dayMapper.selectRealDay(nidList, date);
         System.out.println(dayVoList);
-        producerImpl.sendRealDayMsg(dayVoList);
+        producerImpl.sendDayDBMsg(dayVoList);
         logger.info("在{}获得的daydb数据", date);
     }
 

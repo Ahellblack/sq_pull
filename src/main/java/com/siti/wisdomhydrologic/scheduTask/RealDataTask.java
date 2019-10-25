@@ -3,7 +3,6 @@ package com.siti.wisdomhydrologic.scheduTask;
 import com.siti.wisdomhydrologic.datepull.vo.RealVo;
 import com.siti.wisdomhydrologic.rabbitmq.service.impl.ProducerImpl;
 import com.siti.wisdomhydrologic.scheduTask.mapper.RealMapper;
-import com.siti.wisdomhydrologic.util.DateTransform;
 import com.siti.wisdomhydrologic.util.NidListUtils;
 import com.siti.wisdomhydrologic.util.PullBiz;
 import org.slf4j.Logger;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -50,7 +48,7 @@ public class RealDataTask {
         if (list.size() > 0) {
             Map<Integer, List<RealVo>> map = pullBiz.getRealMap(list);
             map.forEach((key, rlist) -> {
-                producerImpl.sendRealMsg(list);
+                producerImpl.sendRTSQMsg(list);
                     logger.info("在{}时间,获取25分钟前的real数据共{}条", dateStart, list.size());
             });
         }

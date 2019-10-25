@@ -1,8 +1,6 @@
 package com.siti.wisdomhydrologic.datepull.controller;
 
-import com.siti.wisdomhydrologic.datepull.vo.DayVo;
 import com.siti.wisdomhydrologic.datepull.vo.RealVo;
-import com.siti.wisdomhydrologic.datepull.vo.TSDBVo;
 import com.siti.wisdomhydrologic.rabbitmq.service.impl.ProducerImpl;
 import com.siti.wisdomhydrologic.scheduTask.mapper.RealMapper;
 import com.siti.wisdomhydrologic.util.DatesUtils;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,7 +51,7 @@ public class RealController {
                     sum = sum + list.size();
                     map = pullBiz.getRealMap(list);
                     for (int k : map.keySet()) {
-                        producerImpl.sendRealMsg(map.get(k));
+                        producerImpl.sendRTSQMsg(map.get(k));
                     }
                     logger.info("处于{}的real数据,合计打包{}条数据,合计{}个包", date, sum,index);
                 }
@@ -80,7 +77,7 @@ public class RealController {
                     sum = sum + list.size();
                     map = pullBiz.getRealMap(list);
                     for (int k : map.keySet()) {
-                      producerImpl.sendRealMsg(map.get(k));
+                      producerImpl.sendRTSQMsg(map.get(k));
                     }
                     logger.info("处于{}的real测试数据,合计打包{}条数据,合计{}个包", date, sum,index);
                 }

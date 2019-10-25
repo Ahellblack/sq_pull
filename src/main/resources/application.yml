@@ -1,15 +1,10 @@
 quartz:
   enabled: true
-
-server:
-  port: 8081
-  context-path: /wisdomhydrologic
-
 spring:
   thymeleaf:
     mode: LEGACYHTML5
   profiles:
-     active: prod
+     active: test
   application:
     name: wisdomhydrologic
 mybatis:
