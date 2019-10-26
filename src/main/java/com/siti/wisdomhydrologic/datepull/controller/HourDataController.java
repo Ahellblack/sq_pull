@@ -3,6 +3,7 @@ package com.siti.wisdomhydrologic.datepull.controller;
 import com.siti.wisdomhydrologic.datepull.mapper.HourMapper;
 import com.siti.wisdomhydrologic.datepull.service.impl.FetchDataImpl;
 import com.siti.wisdomhydrologic.datepull.vo.HourVo;
+import com.siti.wisdomhydrologic.nid.NidController;
 import com.siti.wisdomhydrologic.rabbitmq.service.impl.ProducerImpl;
 import com.siti.wisdomhydrologic.util.DatesUtils;
 import com.siti.wisdomhydrologic.util.NidListUtils;
@@ -40,7 +41,8 @@ public class HourDataController {
     PullBiz pullBiz;
     @Resource
     HourMapper hourMapper;
-
+    @Resource
+    NidController nidController;
 
     @GetMapping("/getdata")
     public int startPull(String startTime, String endTime) throws ParseException {
@@ -76,7 +78,7 @@ public class HourDataController {
         //得到一个从数据存在的最早日期到当前日期的list
         List<String> datesList = datesUtils.findDayDates(startTime, endTime);
         System.out.println(datesList);
-        List<Integer> nidList = NidListUtils.getNidList();
+        List<Integer> nidList = nidController.getNidList();
         Map<Integer, List<HourVo>> map = new HashMap<>();
         int sum = 0;
         int index = 0;

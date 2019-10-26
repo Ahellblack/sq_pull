@@ -3,6 +3,7 @@ package com.siti.wisdomhydrologic.scheduTask;
 import com.siti.wisdomhydrologic.datepull.mapper.DayMapper;
 import com.siti.wisdomhydrologic.datepull.service.impl.FetchDataImpl;
 import com.siti.wisdomhydrologic.datepull.vo.DayVo;
+import com.siti.wisdomhydrologic.nid.NidController;
 import com.siti.wisdomhydrologic.rabbitmq.service.impl.ProducerImpl;
 import com.siti.wisdomhydrologic.datepull.mapper.RealMapper;
 import com.siti.wisdomhydrologic.util.DateOrTimeTrans;
@@ -38,6 +39,8 @@ public class DayDataTask {
     @Resource
     ProducerImpl producerImpl;
 
+    @Resource
+    NidController nidController;
     /**
      * 每天中午12点触发
      * */
@@ -45,7 +48,7 @@ public class DayDataTask {
     public void testSca() throws Exception {
         Date today = new Date();
         String date = DateOrTimeTrans.Date2TimeString(today);
-        List<Integer> nidList = NidListUtils.getNidList();
+        List<Integer> nidList = nidController.getNidList();
         List<DayVo> dayVoList = dayMapper.selectRealDay(nidList,date);
         Map<Integer, List<DayVo>> map = pullBiz.getMap(dayVoList);
         for (int k : map.keySet()) {

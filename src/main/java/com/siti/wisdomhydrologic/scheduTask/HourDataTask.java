@@ -3,6 +3,7 @@ package com.siti.wisdomhydrologic.scheduTask;
 import com.siti.wisdomhydrologic.datepull.mapper.HourMapper;
 import com.siti.wisdomhydrologic.datepull.service.impl.FetchDataImpl;
 import com.siti.wisdomhydrologic.datepull.vo.HourVo;
+import com.siti.wisdomhydrologic.nid.NidController;
 import com.siti.wisdomhydrologic.rabbitmq.service.impl.ProducerImpl;
 import com.siti.wisdomhydrologic.util.DateTransform;
 import com.siti.wisdomhydrologic.util.NidListUtils;
@@ -35,6 +36,8 @@ public class HourDataTask {
     @Resource
     ProducerImpl producerImpl;
 
+    @Resource
+    NidController nidController;
     /**
      * HourDB数据拉取
      * 每个整点10分执行方法
@@ -50,7 +53,7 @@ public class HourDataTask {
 
         String date = DateTransform.Date2String(today, "yyyy-MM-dd HH:mm:ss");
 
-        List<Integer> nidList = NidListUtils.getNidList();
+        List<Integer> nidList = nidController.getNidList();
         List<HourVo> listByNid = hourMapper.selectDayByNid(nidList, date);
         Map<Integer, List<HourVo>> map = pullBiz.getHourMap(listByNid);
         for (int k : map.keySet()) {

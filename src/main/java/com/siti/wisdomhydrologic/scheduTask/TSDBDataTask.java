@@ -2,6 +2,7 @@ package com.siti.wisdomhydrologic.scheduTask;
 
 import com.siti.wisdomhydrologic.datepull.mapper.TSDBMapper;
 import com.siti.wisdomhydrologic.datepull.vo.TSDBVo;
+import com.siti.wisdomhydrologic.nid.NidController;
 import com.siti.wisdomhydrologic.rabbitmq.service.impl.ProducerImpl;
 import com.siti.wisdomhydrologic.util.DateTransform;
 import com.siti.wisdomhydrologic.util.NidListUtils;
@@ -31,6 +32,8 @@ public class TSDBDataTask {
     @Resource
     PullBiz pullBiz;
 
+    @Resource
+    NidController nidController;
     //每个整点10分执行方法
     @Scheduled(cron = "0 10 0/1 * * ?")//0/5 * * * * ?   0 4 0/1 * * ?
     public void testSca() throws Exception {
@@ -45,7 +48,7 @@ public class TSDBDataTask {
 
         String date = DateTransform.Date2String(today, "yyyy-MM-dd HH:mm:ss");
 
-        List<Integer> nidList = NidListUtils.getNidList();
+        List<Integer> nidList = nidController.getNidList();
         List<TSDBVo> TSDBVoList = tsdbMapper.selectRealTSDB(nidList,date);
         Map<Integer, List<TSDBVo>> map = pullBiz.getTSDBMap(TSDBVoList);
         for (int k : map.keySet()) {

@@ -3,6 +3,7 @@ package com.siti.wisdomhydrologic.datepull.controller;
 import com.siti.wisdomhydrologic.datepull.mapper.TSDBMapper;
 import com.siti.wisdomhydrologic.datepull.service.impl.FetchDataImpl;
 import com.siti.wisdomhydrologic.datepull.vo.TSDBVo;
+import com.siti.wisdomhydrologic.nid.NidController;
 import com.siti.wisdomhydrologic.rabbitmq.service.impl.ProducerImpl;
 import com.siti.wisdomhydrologic.util.DateOrTimeTrans;
 import com.siti.wisdomhydrologic.util.DatesUtils;
@@ -41,6 +42,8 @@ public class TSDBController {
     @Resource
     TSDBMapper tsdbMapper;
 
+    @Resource
+    NidController nidController;
     @GetMapping("/getdata")
     public void startPull(String startTime, String endTime) throws ParseException {
        /* //获取最新日期
@@ -50,7 +53,7 @@ public class TSDBController {
         List<String> datesList = datesUtils.findHourDates(startTime, endTime); /*simpleDateFormat.format(new Date())*/
        // System.out.println("从数据时间asc到目前的年共有" + datesList);
         //获取所有传感器模块的NID
-        List<Integer> nidList = NidListUtils.getNidList();
+        List<Integer> nidList = nidController.getNidList();
         Map<Integer, List<TSDBVo>> map = new HashMap<>();
         int index = 0;
         int Sum = 0;

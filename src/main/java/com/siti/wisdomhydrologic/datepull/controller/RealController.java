@@ -1,6 +1,7 @@
 package com.siti.wisdomhydrologic.datepull.controller;
 
 import com.siti.wisdomhydrologic.datepull.vo.RealVo;
+import com.siti.wisdomhydrologic.nid.NidController;
 import com.siti.wisdomhydrologic.rabbitmq.service.impl.ProducerImpl;
 import com.siti.wisdomhydrologic.datepull.mapper.RealMapper;
 import com.siti.wisdomhydrologic.util.DatesUtils;
@@ -32,6 +33,8 @@ public class RealController {
     @Resource
     ProducerImpl producerImpl;
 
+    @Resource
+    NidController nidController;
     @Autowired
     private RealMapper realMapper;
 
@@ -40,7 +43,7 @@ public class RealController {
         Map<Integer, List<RealVo>> map = new HashMap<>();
         int index = 0;
         int sum = 0;
-        List<Integer> nidList = NidListUtils.getNidList();
+        List<Integer> nidList = nidController.getNidList();
         DatesUtils datesUtils = new DatesUtils();
         try {
             List<String> datesList = datesUtils.findMinDates(startTime, endTime);
