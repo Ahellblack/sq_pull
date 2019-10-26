@@ -1,4 +1,4 @@
-package com.siti.wisdomhydrologic.scheduTask.mapper;
+package com.siti.wisdomhydrologic.datepull.mapper;
 
 import com.siti.wisdomhydrologic.datepull.vo.RealVo;
 import org.apache.ibatis.annotations.Param;

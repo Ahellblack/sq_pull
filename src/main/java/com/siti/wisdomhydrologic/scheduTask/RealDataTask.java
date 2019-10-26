@@ -1,8 +1,9 @@
 package com.siti.wisdomhydrologic.scheduTask;
 
 import com.siti.wisdomhydrologic.datepull.vo.RealVo;
+import com.siti.wisdomhydrologic.nid.NidController;
 import com.siti.wisdomhydrologic.rabbitmq.service.impl.ProducerImpl;
-import com.siti.wisdomhydrologic.scheduTask.mapper.RealMapper;
+import com.siti.wisdomhydrologic.datepull.mapper.RealMapper;
 import com.siti.wisdomhydrologic.util.NidListUtils;
 import com.siti.wisdomhydrologic.util.PullBiz;
 import org.slf4j.Logger;
@@ -31,6 +32,8 @@ public class RealDataTask {
     ProducerImpl producerImpl;
     @Resource
     PullBiz pullBiz;
+    @Resource
+    NidController nidController;
 
     @Scheduled(cron = "0 0/5 * * * ?")//0 2/5 * * * ?
     public void testSca() throws Exception {
@@ -42,7 +45,7 @@ public class RealDataTask {
         //往前推5分钟
         cal.add(Calendar.MINUTE, -5);
         String dateEnd = DateTransform.Date2String(cal.getTime(), "yyyy-MM-dd HH:mm:ss");*/
-        List<Integer> nidList = NidListUtils.getNidList();
+        List<Integer> nidList = nidController.getNidList();
         //获取276个传感器在这个时间前5分钟的数据
         List<RealVo> list = realMapper.getLatestDataNew(nidList);
         if (list.size() > 0) {

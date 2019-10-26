@@ -2,7 +2,7 @@ package com.siti.wisdomhydrologic.datepull.controller;
 
 import com.siti.wisdomhydrologic.datepull.vo.RealVo;
 import com.siti.wisdomhydrologic.rabbitmq.service.impl.ProducerImpl;
-import com.siti.wisdomhydrologic.scheduTask.mapper.RealMapper;
+import com.siti.wisdomhydrologic.datepull.mapper.RealMapper;
 import com.siti.wisdomhydrologic.util.DatesUtils;
 import com.siti.wisdomhydrologic.util.NidListUtils;
 import com.siti.wisdomhydrologic.util.PullBiz;

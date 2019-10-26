@@ -4,7 +4,7 @@ import com.siti.wisdomhydrologic.datepull.mapper.DayMapper;
 import com.siti.wisdomhydrologic.datepull.service.impl.FetchDataImpl;
 import com.siti.wisdomhydrologic.datepull.vo.DayVo;
 import com.siti.wisdomhydrologic.rabbitmq.service.impl.ProducerImpl;
-import com.siti.wisdomhydrologic.scheduTask.mapper.RealMapper;
+import com.siti.wisdomhydrologic.datepull.mapper.RealMapper;
 import com.siti.wisdomhydrologic.util.DateOrTimeTrans;
 import com.siti.wisdomhydrologic.util.NidListUtils;
 import com.siti.wisdomhydrologic.util.PullBiz;
