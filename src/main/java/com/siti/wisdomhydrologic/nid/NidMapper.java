@@ -9,6 +9,7 @@ import java.util.List;
  */
 public interface NidMapper {
 
-    @Select("select section_code from  config_sensor_section_module where section_status  = '1' ")
+    @Select("select section_code from  config_sensor_section_module " +
+            "where section_status  = '1' ")
     List<Integer> getNid();
 }

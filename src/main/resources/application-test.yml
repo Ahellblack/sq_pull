@@ -1,16 +1,17 @@
 spring:
+  datasource:
   #db1 这个名字可以随便取, 为了注入数据源数据的时候能分辨哪个是哪个
-        #第一个数据源, 默认数据源,
-      db1:  #第一个数据源
-        driver-class-name: oracle.jdbc.driver.OracleDriver
-        username: wds
-        password: narisq
-        url: jdbc:oracle:thin:@//172.20.50.51:1521/wds
-      db2:  #第二个数据源
-        driver-class-name: com.mysql.jdbc.Driver
-        username: root
-        password: ITS@cai208
-        url: jdbc:mysql://10.1.30.208:3306/wh?useUnicode=true&characterEncoding=utf8&useSSL=true&allowMultiQueries=true
+      #第一个数据源, 默认数据源,
+    db1:  #第一个数据源
+      driver-class-name: oracle.jdbc.driver.OracleDriver
+      username: wds
+      password: narisq
+      url: jdbc:oracle:thin:@//172.20.50.51:1521/wds
+    db2:  #第二个数据源
+      driver-class-name: com.mysql.jdbc.Driver
+      username: root
+      password: pdsw
+      url: jdbc:mysql://172.20.50.115:3306/wh?useUnicode=true&characterEncoding=utf8&useSSL=true&allowMultiQueries=true
 #rabbitmq相关配置dell-PC
   rabbitmq:
      host: 114.80.231.178 #10.1.30.24

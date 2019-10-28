@@ -37,7 +37,7 @@ public class NidController {
             // 当http请求无响应值时,用固定数据源替代
             //if (s == null || "".equals(s)) {
             /**
-             * 替换为208mysql数据库的模组表数据
+             * 替换为115mysql数据库的模组表数据
              * */
             List<Integer> nid1 = nidMapper.getNid();
 
