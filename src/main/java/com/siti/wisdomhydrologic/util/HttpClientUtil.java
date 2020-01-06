@@ -53,7 +53,7 @@ public class HttpClientUtil {
                 resultString = EntityUtils.toString(response.getEntity(), "UTF-8");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            return ""; // 返回空字符串
         } finally {
             try {
                 if (response != null) {
@@ -61,7 +61,7 @@ public class HttpClientUtil {
                 }
                 httpclient.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                return ""; // 返回空字符串
             }
         }
         return resultString;
@@ -73,12 +73,7 @@ public class HttpClientUtil {
      * @return String
      */
     public static String doGet(String url) {
-        try{
-            return doGet(url, null);
-        }catch (Exception e){
-            return "";
-        }
-
+        return doGet(url, null);
     }
 
     /**

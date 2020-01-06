@@ -51,7 +51,7 @@ public class HourDataController {
         //得到一个从数据存在的最早日期到当前日期的list
         List<String> datesList = datesUtils.findHourDates(startTime, endTime);
         System.out.println(datesList);
-        List<Integer> nidList = NidListUtils.getNidList();
+        List<Integer> nidList = nidController.getNidList();
         Map<Integer, List<HourVo>> map = new HashMap<>();
         int sum = 0;
         int index = 0;

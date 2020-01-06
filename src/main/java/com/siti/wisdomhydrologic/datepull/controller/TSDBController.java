@@ -81,7 +81,7 @@ public class TSDBController {
         List<String> datesList = datesUtils.findDayDates(startTime, endTime); /*simpleDateFormat.format(new Date())*/
         System.out.println("从数据时间asc到目前的年共有" + datesList);
         //获取所有传感器模块的NID
-        List<Integer> nidList = NidListUtils.getNidList();
+        List<Integer> nidList = nidController.getNidList();
         Map<Integer, List<TSDBVo>> map = new HashMap<>();
         int index = 0;
         int Sum = 0;
@@ -105,7 +105,7 @@ public class TSDBController {
     public void getTsdbTest() {
         Date today = new Date();
         String date = DateOrTimeTrans.Date2TimeString(today);
-        List<Integer> nidList = NidListUtils.getNidList();
+        List<Integer> nidList = nidController.getNidList();
         System.out.println(nidList);
         List<TSDBVo> tsdbVoList = tsdbMapper.selectRealTSDB(nidList, date);
         producerImpl.sendTSDBMsg(tsdbVoList);

@@ -75,7 +75,7 @@ public class DataPullController {
     public void testSca() throws Exception {
         Date today = new Date();
         String date = DateOrTimeTrans.Date2TimeString(today);
-        List<Integer> nidList = NidListUtils.getNidList();
+        List<Integer> nidList = nidController.getNidList();
         List<DayVo> dayVoList = dayMapper.selectRealDay(nidList, date);
         System.out.println(dayVoList);
         producerImpl.sendDayDBMsg(dayVoList);

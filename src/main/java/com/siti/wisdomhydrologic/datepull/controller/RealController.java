@@ -69,7 +69,7 @@ public class RealController {
         Map<Integer, List<RealVo>> map = new HashMap<>();
         int index = 0;
         int sum = 0;
-        List<Integer> nidList = NidListUtils.getNidList();
+        List<Integer> nidList = nidController.getNidList();
         DatesUtils datesUtils = new DatesUtils();
         try {
             List<String> datesList = datesUtils.findMinDates(startTime, endTime);
