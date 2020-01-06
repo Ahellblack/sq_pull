@@ -73,7 +73,12 @@ public class HttpClientUtil {
      * @return String
      */
     public static String doGet(String url) {
-        return doGet(url, null);
+        try{
+            return doGet(url, null);
+        }catch (Exception e){
+            return "";
+        }
+
     }
 
     /**
