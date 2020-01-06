@@ -60,3 +60,8 @@ filePath:
 logback:
   logHome: C:/wisdomhydrologic/log/
   logName: wisdomhydrologic
+
+nid:
+  url: http://172.20.50.115:8080/sq/module/getAllNid
+  testUrl: http://10.1.30.210:50081/sq/module/getAllNid
+  localUrl: http://10.1.4.50:8080/sq/module/getAllNid
