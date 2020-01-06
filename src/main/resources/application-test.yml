@@ -31,6 +31,7 @@ spring:
           prefetch: 10
 server:
   port: 8097
+  context-path: /wisdomhydrologic
 
 filePath:
   invalidFileDelete: 0    # 无效文件立即删除

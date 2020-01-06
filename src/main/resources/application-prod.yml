@@ -49,6 +49,7 @@ spring:
     #spring.rabbitmq.template.retry.multiplier=1.0
 server:
   port: 8096
+  context-path: /wisdomhydrologic
 
 filePath:
   invalidFileDelete: 0    # 无效文件立即删除
