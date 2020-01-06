@@ -29,9 +29,6 @@ import java.util.Map;
 @RequestMapping("/hourdata")
 public class HourDataController {
     public static final Logger logger = LoggerFactory.getLogger(DataPullController.class);
-    public static final int MAX_SIZE = 10000;
-    public static final String Start_Time = "2019-01";
-    public static final String End_Time = "2019-12";
     @Resource
     FetchDataImpl fetchDataImpl;
     @Resource
