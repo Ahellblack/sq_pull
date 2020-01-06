@@ -1,10 +1,8 @@
-package com.siti.wisdomhydrologic.datepull.service.impl;
+package com.siti.wisdomhydrologic.datepull.service;
 
-import com.siti.wisdomhydrologic.datepull.entity.RTSQ;
 import com.siti.wisdomhydrologic.datepull.mapper.DayMapper;
 import com.siti.wisdomhydrologic.datepull.mapper.HourMapper;
 import com.siti.wisdomhydrologic.datepull.mapper.TSDBMapper;
-import com.siti.wisdomhydrologic.datepull.service.FetchData;
 import com.siti.wisdomhydrologic.datepull.vo.DayVo;
 import com.siti.wisdomhydrologic.datepull.vo.HourVo;
 import com.siti.wisdomhydrologic.datepull.vo.TSDBVo;
@@ -19,21 +17,13 @@ import java.util.List;
  * @data ${DATA}-16:39
  */
 @Service
-public class FetchDataImpl implements FetchData{
+public class FetchDataImpl {
     @Resource
     DayMapper dayMapper;
     @Resource
     HourMapper hourMapper;
     @Resource
     TSDBMapper tsdbMapper;
-
-
-    public int selectDayCount(String date) {return dayMapper.selectNum(date);}
-
-    public int selectHourCount(String date) { return hourMapper.selectHourCount(date); }
-
-    public int selectTSDBCount(String date) { return tsdbMapper.selectTSDBNum(date); }
-
 
 
     public List<DayVo> selectByDayCondition(String date, List<Integer> nidList, int begin, int end) {
@@ -51,16 +41,5 @@ public class FetchDataImpl implements FetchData{
         return tsdbMapper.selectByConditions( date,all, begin, end, nidList);
 
     }
-
-
-    public List<RTSQ> selectByRTSQCondition(String s, int size, int i, int i1) {
-        return null;
-    }
-
-
-    public List<Integer> selectTSDBSenId() {
-        return tsdbMapper.selectTSDBSenId();
-    }
-
 
 }

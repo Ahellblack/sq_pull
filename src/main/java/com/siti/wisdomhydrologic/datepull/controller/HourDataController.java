@@ -1,7 +1,7 @@
 package com.siti.wisdomhydrologic.datepull.controller;
 
 import com.siti.wisdomhydrologic.datepull.mapper.HourMapper;
-import com.siti.wisdomhydrologic.datepull.service.impl.FetchDataImpl;
+import com.siti.wisdomhydrologic.datepull.service.FetchDataImpl;
 import com.siti.wisdomhydrologic.datepull.vo.HourVo;
 import com.siti.wisdomhydrologic.nid.NidController;
 import com.siti.wisdomhydrologic.rabbitmq.service.impl.ProducerImpl;
@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;

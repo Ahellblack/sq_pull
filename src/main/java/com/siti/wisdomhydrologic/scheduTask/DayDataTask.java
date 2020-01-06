@@ -1,13 +1,12 @@
 package com.siti.wisdomhydrologic.scheduTask;
 
 import com.siti.wisdomhydrologic.datepull.mapper.DayMapper;
-import com.siti.wisdomhydrologic.datepull.service.impl.FetchDataImpl;
+import com.siti.wisdomhydrologic.datepull.service.FetchDataImpl;
 import com.siti.wisdomhydrologic.datepull.vo.DayVo;
 import com.siti.wisdomhydrologic.nid.NidController;
 import com.siti.wisdomhydrologic.rabbitmq.service.impl.ProducerImpl;
 import com.siti.wisdomhydrologic.datepull.mapper.RealMapper;
 import com.siti.wisdomhydrologic.util.DateOrTimeTrans;
-import com.siti.wisdomhydrologic.util.NidListUtils;
 import com.siti.wisdomhydrologic.util.PullBiz;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,7 +51,7 @@ public class DayDataTask {
         List<DayVo> dayVoList = dayMapper.selectRealDay(nidList,date);
         Map<Integer, List<DayVo>> map = pullBiz.getMap(dayVoList);
         for (int k : map.keySet()) {
-            producerImpl.sendDayDBMsg(map.get(k));
+            //producerImpl.sendDayDBMsg(map.get(k));
             logger.info("在{}获得的day数据{}条", date,dayVoList.size());
         }
     }

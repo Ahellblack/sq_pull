@@ -1,7 +1,7 @@
 package com.siti.wisdomhydrologic.datepull.controller;
 
 import com.siti.wisdomhydrologic.datepull.mapper.DayMapper;
-import com.siti.wisdomhydrologic.datepull.service.impl.FetchDataImpl;
+import com.siti.wisdomhydrologic.datepull.service.FetchDataImpl;
 import com.siti.wisdomhydrologic.datepull.vo.DayVo;
 import com.siti.wisdomhydrologic.nid.NidController;
 import com.siti.wisdomhydrologic.rabbitmq.service.impl.ProducerImpl;
