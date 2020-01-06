@@ -35,7 +35,7 @@ public class RealDataTask {
     @Resource
     NidController nidController;
 
-    @Scheduled(cron = "0/5 * * * * ?")//0 0/5 * * * ?
+    @Scheduled(cron = "0 0/5 * * * ?")//0 0/5 * * * ?
     public void testSca() throws Exception {
         Date today = new Date();
         //获取前一个整5分数据
@@ -51,7 +51,7 @@ public class RealDataTask {
         if (list.size() > 0) {
             Map<Integer, List<RealVo>> map = pullBiz.getRealMap(list);
             map.forEach((key, rlist) -> {
-               // producerImpl.sendRTSQMsg(list);
+               //producerImpl.sendRTSQMsg(list);
                 logger.info("在{}时间,获取25分钟前的real数据共{}条", dateStart, list.size());
             });
         }

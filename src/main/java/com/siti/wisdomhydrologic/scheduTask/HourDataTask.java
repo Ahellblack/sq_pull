@@ -41,7 +41,7 @@ public class HourDataTask {
      * HourDB数据拉取
      * 每个整点10分执行方法
      */
-    @Scheduled(cron = "0 0/1 * * * ?")//0 0/1 * * * ?  0 10 0/1 * * ?
+    @Scheduled(cron = "0 10 0/1 * * ?")//0 0/1 * * * ?  0 10 0/1 * * ?
     public void testSca() throws Exception {
         Date today = new Date();
         //每小时数据获取
